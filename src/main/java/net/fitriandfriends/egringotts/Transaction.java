@@ -18,17 +18,25 @@ public class Transaction {
     private Long toAccountId;
 
     private Double amount;
+    private String currency;
+
     private Double fromAccountBalance;
+
     private Date transactionDate;
     private String category;
 
     public Transaction() {}
 
-    public Transaction(Long fromAccountId, Long toAccountId, Double amount, Double balance, String category) {
+    public Transaction(Long fromAccountId, Long toAccountId, Double amount, String currency, Double balance, String category) {
 
         this.fromAccountId = fromAccountId;
+        this.toAccountId = toAccountId;
+
         this.amount = amount;
+        this.currency = currency;
+
         this.fromAccountBalance = balance;
+
         this.transactionDate = new Date();
         this.category = category;
 
@@ -52,12 +60,28 @@ public class Transaction {
         this.fromAccountId = userId;
     }
 
+    public Long getToAccountId() {
+        return toAccountId;
+    }
+
+    public void setToAccountId(Long toAccountId) {
+        this.toAccountId = toAccountId;
+    }
+
     public Double getAmount() {
         return amount;
     }
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Double getFromAccountBalance() {
@@ -83,4 +107,5 @@ public class Transaction {
     public void setCategory(String category) {
         this.category = category;
     }
+
 }

@@ -3,17 +3,19 @@ package net.fitriandfriends.egringotts;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Account {
 
     // Instance variables
-    // Important account details;
+    // Important account details
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountID;
 
-    private String type;
+    @OneToOne(mappedBy = "account")
+    private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
@@ -46,7 +48,8 @@ public class Account {
     @Embedded
     private Address billingAddress;
 
-    private User userType;
+    @OneToOne(mappedBy = "account_id", cascade = CascadeType.ALL)
+    private UserImage userImage;
 
     // Account access information
     private String emailAddress;
@@ -77,12 +80,16 @@ public class Account {
 
     private int securityPIN;
 
-    // Constructor
+    // Financial information
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Card> cards;
+
+    // Constructors
     public Account() {}
 
-    public Account(String type, Date lastLoginDate, String firstName, String middleName, String lastName, String gender, Date dateOfBirth, Address mailingAddress, Address billingAddress, User userType, String emailAddress, String username, String password, TelephoneNumber homeTelephoneNumber, TelephoneNumber mobileTelephoneNumber, TelephoneNumber workTelephoneNumber, SecurityQuestionSet securityQuestionSet, int securityPIN) {
+    public Account(User user, Date lastLoginDate, String firstName, String middleName, String lastName, String gender, Date dateOfBirth, Address mailingAddress, Address billingAddress, User userType, String emailAddress, String username, String password, TelephoneNumber homeTelephoneNumber, TelephoneNumber mobileTelephoneNumber, TelephoneNumber workTelephoneNumber, SecurityQuestionSet securityQuestionSet, int securityPIN) {
 
-        this.type = type;
+        this.user = user;
         this.creationDate = new Date();
         this.closingDate = null;
         this.lastLoginDate = lastLoginDate;
@@ -108,12 +115,12 @@ public class Account {
     }
 
     // Accessor and mutator methods
-    public String getType() {
-        return type;
+    public User getUser() {
+        return user;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getAccountID() {
@@ -228,6 +235,14 @@ public class Account {
         this.userType = userType;
     }
 
+    public UserImage getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(UserImage userImage) {
+        this.userImage = userImage;
+    }
+
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -296,7 +311,7 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-                "type='" + type + '\'' +
+                "user='" + user + '\'' +
                 ", accountID=" + accountID +
                 ", creationDate=" + creationDate +
                 ", closingDate=" + closingDate +
@@ -320,6 +335,7 @@ public class Account {
                 ", securityQuestionSet=" + securityQuestionSet +
                 ", securityPIN=" + securityPIN +
                 '}';
+
     }
 
 }
