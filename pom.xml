@@ -12,7 +12,7 @@
 	<artifactId>egringotts</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>E-Gringotts</name>
-	<description>Demo project for Spring Boot</description>
+	<description>The WIA1002 Data Structure course project for the group "Fitri and Friends".</description>
 	<properties>
 		<java.version>22</java.version>
 	</properties>

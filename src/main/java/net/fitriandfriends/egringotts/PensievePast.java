@@ -42,11 +42,21 @@ public class PensievePast {
 
     public List<Transaction> getPensievePast() {
 
-        ArrayList<Transaction> pensievePast = new ArrayList<>();
+        Stack<Transaction> tempStack = new Stack<>();
+        List<Transaction> pensievePast = new ArrayList<>();
 
         while (!transactionStack.isEmpty()) {
 
-            pensievePast.add(transactionStack.pop());
+            Transaction transaction = transactionStack.pop();
+
+            pensievePast.add(transaction);
+            tempStack.push(transaction);
+
+        }
+
+        while (!tempStack.isEmpty()) {
+
+            transactionStack.push(tempStack.pop());
 
         }
 

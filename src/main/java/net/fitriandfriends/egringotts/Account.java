@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table
 public class Account {
 
     // Instance variables
@@ -33,8 +34,8 @@ public class Account {
     private Date lastActivityDate;
 
     // Account holder information
-    private String firstName;
-    private String middleName;
+    private String givenName;
+
     private String lastName;
 
     private String gender;
@@ -87,7 +88,7 @@ public class Account {
     // Constructors
     public Account() {}
 
-    public Account(User user, Date lastLoginDate, String firstName, String middleName, String lastName, String gender, Date dateOfBirth, Address mailingAddress, Address billingAddress, User userType, String emailAddress, String username, String password, TelephoneNumber homeTelephoneNumber, TelephoneNumber mobileTelephoneNumber, TelephoneNumber workTelephoneNumber, SecurityQuestionSet securityQuestionSet, int securityPIN) {
+    public Account(User user, Date lastLoginDate, String givenName, String middleName, String lastName, String gender, Date dateOfBirth, Address mailingAddress, Address billingAddress, User userType, String emailAddress, String username, String password, TelephoneNumber homeTelephoneNumber, TelephoneNumber mobileTelephoneNumber, TelephoneNumber workTelephoneNumber, SecurityQuestionSet securityQuestionSet, int securityPIN) {
 
         this.user = user;
         this.creationDate = new Date();
@@ -95,7 +96,7 @@ public class Account {
         this.lastLoginDate = lastLoginDate;
         this.lastLogoutDate = null;
         this.lastActivityDate = null;
-        this.firstName = firstName;
+        this.givenName = givenName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.gender = gender;
@@ -171,12 +172,12 @@ public class Account {
         this.lastActivityDate = lastActivityDate;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getGivenName() {
+        return givenName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
     }
 
     public String getMiddleName() {
@@ -318,7 +319,7 @@ public class Account {
                 ", lastLoginDate=" + lastLoginDate +
                 ", lastLogoutDate=" + lastLogoutDate +
                 ", lastActivityDate=" + lastActivityDate +
-                ", firstName='" + firstName + '\'' +
+                ", givenName='" + givenName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
