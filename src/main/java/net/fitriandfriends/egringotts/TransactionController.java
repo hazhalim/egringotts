@@ -14,10 +14,10 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @PostMapping("/{accountId}")
-    public ResponseEntity<Transaction> createTransaction(@PathVariable Long accountId, @RequestBody Transaction transaction) {
+    @PostMapping("/create")
+    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
 
-        Transaction createdTransaction = transactionService.createTransaction(accountId, transaction);
+        Transaction createdTransaction = transactionService.createTransaction(transaction);
 
         return new ResponseEntity<>(createdTransaction, HttpStatus.CREATED);
 
