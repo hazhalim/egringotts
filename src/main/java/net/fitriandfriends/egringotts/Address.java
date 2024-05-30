@@ -1,11 +1,14 @@
 package net.fitriandfriends.egringotts;
 
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 
-@Embeddable
+@Entity
+@Table
 public class Address {
 
     // Instance variables
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String type;
     private String streetName1;
     private String streetName2;

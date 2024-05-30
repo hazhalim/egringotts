@@ -15,7 +15,8 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountID;
 
-    @OneToOne(mappedBy = "account")
+    @OneToOne
+    @JoinColumn(name = "userID",referencedColumnName = "userID")
     private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -27,16 +28,8 @@ public class Account {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLoginDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastLogoutDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastActivityDate;
-
     // Account holder information
-    private String givenName;
-
-    private String lastName;
+    private String fullName;
 
     private String gender;
 
@@ -45,13 +38,12 @@ public class Account {
 
 //    List<Transaction> transactions;
 
-    @Embedded
-    private Address mailingAddress;
+    @OneToOne
+    @JoinColumn(name = "addressID", referencedColumnName = "addressID")
+    private Address addressID;
 
-    @Embedded
-    private Address billingAddress;
-
-    @OneToOne(mappedBy = "account_id", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "userImageID", referencedColumnName = "userImageID")
     private UserImage userImage;
 
     // Account access information
@@ -59,71 +51,29 @@ public class Account {
     private String username;
     private String password;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "number", column = @Column(name = "home_telephone_number"))
-    })
-    private TelephoneNumber homeTelephoneNumber;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "number", column = @Column(name = "mobile_telephone_number"))
-    })
-    private TelephoneNumber mobileTelephoneNumber;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "number", column = @Column(name = "work_telephone_number"))
-    })
-    private TelephoneNumber workTelephoneNumber;
-
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "security_question_set_id", referencedColumnName = "id")
-//    private SecurityQuestionSet securityQuestionSet;
+    private String telephoneNumber;
+    @ManyToOne
+    @JoinColumn(name = "securityQuestionID", referencedColumnName = "securityQuestionID")
+    private SecurityQuestion securityquestion;
 
     private int securityPIN;
-
-    // Financial information
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Card> cards;
 
     // Constructors
     public Account() {}
 
-    public Account(User user, Date lastLoginDate, String givenName, String middleName, String lastName, String gender, Date dateOfBirth, Address mailingAddress, Address billingAddress, User userType, String emailAddress, String username, String password, TelephoneNumber homeTelephoneNumber, TelephoneNumber mobileTelephoneNumber, TelephoneNumber workTelephoneNumber, int securityPIN) {
-
+    public Account(User user, String fullName, String gender, Date dateOfBirth, Address addressID, UserImage userImage, String emailAddress, String username, String password, String telephoneNumber, SecurityQuestion securityquestion, int securityPIN) {
         this.user = user;
-        this.creationDate = new Date();
-        this.closingDate = null;
-        this.lastLoginDate = lastLoginDate;
-        this.lastLogoutDate = null;
-        this.lastActivityDate = null;
-        this.givenName = givenName;
-//        this.middleName = middleName;
-        this.lastName = lastName;
+        this.fullName = fullName;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
-        this.mailingAddress = mailingAddress;
-        this.billingAddress = billingAddress;
-//        this.userType = userType;
+        this.addressID = addressID;
+        this.userImage = userImage;
         this.emailAddress = emailAddress;
         this.username = username;
         this.password = password;
-        this.homeTelephoneNumber = homeTelephoneNumber;
-        this.mobileTelephoneNumber = mobileTelephoneNumber;
-        this.workTelephoneNumber = workTelephoneNumber;
-//        this.securityQuestionSet = securityQuestionSet;
+        this.telephoneNumber = telephoneNumber;
+        this.securityquestion = securityquestion;
         this.securityPIN = securityPIN;
-
-    }
-
-    // Accessor and mutator methods
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Long getAccountID() {
@@ -132,6 +82,14 @@ public class Account {
 
     public void setAccountID(Long accountID) {
         this.accountID = accountID;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getCreationDate() {
@@ -158,44 +116,12 @@ public class Account {
         this.lastLoginDate = lastLoginDate;
     }
 
-    public Date getLastLogoutDate() {
-        return lastLogoutDate;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setLastLogoutDate(Date lastLogoutDate) {
-        this.lastLogoutDate = lastLogoutDate;
-    }
-
-    public Date getLastActivityDate() {
-        return lastActivityDate;
-    }
-
-    public void setLastActivityDate(Date lastActivityDate) {
-        this.lastActivityDate = lastActivityDate;
-    }
-
-    public String getGivenName() {
-        return givenName;
-    }
-
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
-
-//    public String getMiddleName() {
-//        return middleName;
-//    }
-
-//    public void setMiddleName(String middleName) {
-//        this.middleName = middleName;
-//    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getGender() {
@@ -214,29 +140,13 @@ public class Account {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Address getMailingAddress() {
-        return mailingAddress;
+    public Address getAddressID() {
+        return addressID;
     }
 
-    public void setMailingAddress(Address mailingAddress) {
-        this.mailingAddress = mailingAddress;
+    public void setAddressID(Address addressID) {
+        this.addressID = addressID;
     }
-
-    public Address getBillingAddress() {
-        return billingAddress;
-    }
-
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
-//    public User getUserType() {
-//        return userType;
-//    }
-
-//    public void setUserType(User userType) {
-//        this.userType = userType;
-//    }
 
     public UserImage getUserImage() {
         return userImage;
@@ -270,37 +180,21 @@ public class Account {
         this.password = password;
     }
 
-    public TelephoneNumber getHomeTelephoneNumber() {
-        return homeTelephoneNumber;
+    public String getTelephoneNumber() {
+        return telephoneNumber;
     }
 
-    public void setHomeTelephoneNumber(TelephoneNumber homeTelephoneNumber) {
-        this.homeTelephoneNumber = homeTelephoneNumber;
+    public void setTelephoneNumber(String telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
-    public TelephoneNumber getMobileTelephoneNumber() {
-        return mobileTelephoneNumber;
+    public SecurityQuestion getSecurityquestion() {
+        return securityquestion;
     }
 
-    public void setMobileTelephoneNumber(TelephoneNumber mobileTelephoneNumber) {
-        this.mobileTelephoneNumber = mobileTelephoneNumber;
+    public void setSecurityquestion(SecurityQuestion securityquestion) {
+        this.securityquestion = securityquestion;
     }
-
-    public TelephoneNumber getWorkTelephoneNumber() {
-        return workTelephoneNumber;
-    }
-
-    public void setWorkTelephoneNumber(TelephoneNumber workTelephoneNumber) {
-        this.workTelephoneNumber = workTelephoneNumber;
-    }
-
-//    public SecurityQuestionSet getSecurityQuestionSet() {
-//        return securityQuestionSet;
-//    }
-
-//    public void setSecurityQuestionSet(SecurityQuestionSet securityQuestionSet) {
-//        this.securityQuestionSet = securityQuestionSet;
-//    }
 
     public int getSecurityPIN() {
         return securityPIN;
@@ -309,36 +203,4 @@ public class Account {
     public void setSecurityPIN(int securityPIN) {
         this.securityPIN = securityPIN;
     }
-
-    // Other methods
-    @Override
-    public String toString() {
-        return "Account{" +
-                "user='" + user + '\'' +
-                ", accountID=" + accountID +
-                ", creationDate=" + creationDate +
-                ", closingDate=" + closingDate +
-                ", lastLoginDate=" + lastLoginDate +
-                ", lastLogoutDate=" + lastLogoutDate +
-                ", lastActivityDate=" + lastActivityDate +
-                ", givenName='" + givenName + '\'' +
-//                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", gender='" + gender + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", mailingAddress=" + mailingAddress +
-                ", billingAddress=" + billingAddress +
-//                ", userType=" + userType +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", homeTelephoneNumber=" + homeTelephoneNumber +
-                ", mobileTelephoneNumber=" + mobileTelephoneNumber +
-                ", workTelephoneNumber=" + workTelephoneNumber +
-//                ", securityQuestionSet=" + securityQuestionSet +
-                ", securityPIN=" + securityPIN +
-                '}';
-
-    }
-
 }

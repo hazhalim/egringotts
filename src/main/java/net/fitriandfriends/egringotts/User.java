@@ -3,18 +3,15 @@ package net.fitriandfriends.egringotts;
 import jakarta.persistence.*;
 
 @Entity
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+@Table
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public abstract class User {
 
     // Instance variables
     @Id
-    private Long accountId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userID;
 
-    @OneToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    @Column(nullable = false)
     String type;
 
     // Constructors
@@ -27,36 +24,13 @@ public abstract class User {
     }
 
     // Accessor and mutator methods
-    public Long getAccountId() {
 
-        return this.accountId;
-
+    public Long getUserID() {
+        return userID;
     }
 
-    public void setAccountId(Long accountId) {
-
-        if (type.equals("Goblin")) {
-
-            this.accountId = accountId;
-
-        }
-
-    }
-
-    public Account getAccount() {
-
-        return this.account;
-
-    }
-
-    public void setAccount(Account account) {
-
-        if (type.equals("Goblin")) {
-
-            this.account = account;
-
-        }
-
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 
     public String getType() {

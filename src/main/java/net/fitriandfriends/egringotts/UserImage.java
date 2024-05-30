@@ -3,12 +3,13 @@ package net.fitriandfriends.egringotts;
 import jakarta.persistence.*;
 
 @Entity
+@Table
 public class UserImage {
 
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userImageID;
 
     @JoinColumn(name = "account_id")
     private Long accountId;
@@ -26,20 +27,12 @@ public class UserImage {
     }
 
     // Accessor and mutator methods
-    public Long getId() {
-        return id;
+    public Long getUserImageID() {
+        return userImageID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+    public void setUserImageID(Long id) {
+        this.userImageID = id;
     }
 
     public String getImagePath() {
