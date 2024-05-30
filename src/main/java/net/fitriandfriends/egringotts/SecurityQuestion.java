@@ -9,7 +9,7 @@ public class SecurityQuestion {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "securityQuestionID")
+    @Column(name = "security_question_id")
     private Long securityQuestionID;
 
     @Column(name = "question")

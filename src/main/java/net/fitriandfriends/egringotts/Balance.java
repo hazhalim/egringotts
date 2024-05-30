@@ -9,11 +9,11 @@ public class Balance {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "balanceID")
+    @Column(name = "balance_id")
     private Long balanceID;
 
     @ManyToOne
-    @JoinColumn(name = "accountID", referencedColumnName = "accountID")
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
     @Column(name = "currency")

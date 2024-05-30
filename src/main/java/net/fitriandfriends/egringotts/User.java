@@ -10,7 +10,7 @@ public abstract class User {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userID")
+    @Column(name = "user_id")
     private Long userID;
 
     @Column(name = "type")

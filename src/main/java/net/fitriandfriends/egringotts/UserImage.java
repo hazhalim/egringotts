@@ -9,10 +9,10 @@ public class UserImage {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userImageID")
+    @Column(name = "user_image_id")
     private Long userImageID;
 
-    @Column(name = "imagePath")
+    @Column(name = "image_path")
     private String imagePath;
 
     // Constructors

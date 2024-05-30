@@ -11,19 +11,20 @@ public class Card {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "card_id")
     private Long cardID;
 
     @ManyToOne
-    @JoinColumn(name = "accountID", referencedColumnName = "accountID")
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
-    @Column(name = "cardNumber")
+    @Column(name = "card_number")
     private String cardNumber;
 
     @Column(name = "cvv")
     private String cvv;
 
-    @Column(name = "expiryDate")
+    @Column(name = "expiry_date")
     private Date expiryDate;
 
     // Constructors

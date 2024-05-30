@@ -9,15 +9,15 @@ public class SecurityAnswer {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "securityAnswerID")
+    @Column(name = "security_answer_id")
     private Long securityAnswerID;
 
     @OneToOne
-    @JoinColumn(name = "accountID", referencedColumnName = "accountID")
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "securityQuestionID", referencedColumnName = "securityQuestionID")
+    @JoinColumn(name = "security_question_id", referencedColumnName = "security_question_Id")
     private SecurityQuestion securityQuestion;
 
     @Column(name = "answer")

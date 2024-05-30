@@ -11,15 +11,15 @@ public class Transaction {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transactionID")
+    @Column(name = "transaction_id")
     private Long transactionId;
 
     @ManyToOne
-    @JoinColumn(name = "fromAccountID", referencedColumnName = "accountID")
+    @JoinColumn(name = "from_account_id", referencedColumnName = "account_id")
     private Account fromAccount;
 
     @ManyToOne
-    @JoinColumn(name = "toAccountID", referencedColumnName = "accountID")
+    @JoinColumn(name = "to_account_id", referencedColumnName = "account_id")
     private Account toAccount;
 
     @Column(name = "amount")
@@ -28,7 +28,7 @@ public class Transaction {
     @Column(name = "currency")
     private String currency;
 
-    @Column(name = "fromAccountBalance")
+    @Column(name = "from_account_balance")
     private Double fromAccountBalance;
 
     @Temporal(TemporalType.TIMESTAMP)

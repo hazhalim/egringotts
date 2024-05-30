@@ -9,16 +9,16 @@ public class Address {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "addressID")
+    @Column(name = "address_id")
     private Long addressID;
 
     @Column(name = "type")
     private String type;
 
-    @Column(name = "streetName1")
+    @Column(name = "street_name_1")
     private String streetName1;
 
-    @Column(name = "streetName2")
+    @Column(name = "street_name_2")
     private String streetName2;
 
     @Column(name = "town")

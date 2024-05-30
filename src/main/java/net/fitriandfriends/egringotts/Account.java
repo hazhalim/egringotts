@@ -12,46 +12,46 @@ public class Account {
     // Important account details
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "accountID")
+    @Column(name = "account_id")
     private Long accountID;
 
     @OneToOne
-    @JoinColumn(name = "userID", referencedColumnName = "userID")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "creationDate")
+    @Column(name = "creation_date")
     private Date creationDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "closingDate")
+    @Column(name = "closing_date")
     private Date closingDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "lastLoginDate")
+    @Column(name = "last_login_date")
     private Date lastLoginDate;
 
     // Account holder information
-    @Column(name = "fullName")
+    @Column(name = "full_name")
     private String fullName;
 
     @Column(name = "gender")
     private String gender;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "dateOfBirth")
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
     @OneToOne
-    @JoinColumn(name = "addressID", referencedColumnName = "addressID")
+    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     private Address addressID;
 
     @OneToOne
-    @JoinColumn(name = "userImageID", referencedColumnName = "userImageID")
+    @JoinColumn(name = "user_image_id", referencedColumnName = "user_image_id")
     private UserImage userImage;
 
     // Account access information
-    @Column(name = "emailAddress")
+    @Column(name = "email_address")
     private String emailAddress;
 
     @Column(name = "username")
@@ -60,14 +60,14 @@ public class Account {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "telephoneNumber")
+    @Column(name = "telephone_number")
     private String telephoneNumber;
 
     @ManyToOne
-    @JoinColumn(name = "securityQuestionID", referencedColumnName = "securityQuestionID")
+    @JoinColumn(name = "security_question_id", referencedColumnName = "security_question_id")
     private SecurityQuestion securityquestion;
 
-    @Column(name = "securityPIN")
+    @Column(name = "security_pin")
     private int securityPIN;
 
     // Constructors
