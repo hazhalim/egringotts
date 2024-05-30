@@ -36,6 +36,7 @@ public class Address {
     // Constructors
     public Address() {}
 
+    // With street name 2
     public Address(String type, String streetName1, String streetName2, String town, String state, String postcode, String country) {
 
         this.type = type;
@@ -48,17 +49,18 @@ public class Address {
 
     }
 
-    public Address(String streetName1, String streetName2, String town, String state, String postcode, String country) {
+    // Without street name 2
+    public Address(String type, String streetName1, String town, String state, String postcode, String country) {
 
+        this.type = type;
         this.streetName1 = streetName1;
-        this.streetName2 = streetName2;
+        this.streetName2 = null;
         this.town = town;
         this.state = state;
         this.postcode = postcode;
         this.country = country;
 
     }
-
     // Accessor and mutator methods
     public String getType() {
 

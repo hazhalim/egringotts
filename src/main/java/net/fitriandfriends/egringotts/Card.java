@@ -18,6 +18,9 @@ public class Card {
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "card_number")
     private String cardNumber;
 
@@ -30,12 +33,14 @@ public class Card {
     // Constructors
     public Card() {}
 
-    public Card(Long cardID, Account account, String cardNumber, String cvv, Date expiryDate) {
-        this.cardID = cardID;
+    public Card(Account account, String type, String cardNumber, String cvv, Date expiryDate) {
+
+        this.type = type;
         this.account = account;
         this.cardNumber = cardNumber;
         this.cvv = cvv;
         this.expiryDate = expiryDate;
+
     }
 
     public Long getCardID() {
@@ -52,6 +57,14 @@ public class Card {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getCardNumber() {
@@ -78,16 +91,18 @@ public class Card {
         this.expiryDate = expiryDate;
     }
 
-    // Other methods
     @Override
     public String toString() {
+
         return "Card{" +
                 "cardID=" + cardID +
                 ", account=" + account +
+                ", type='" + type + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", cvv='" + cvv + '\'' +
                 ", expiryDate=" + expiryDate +
                 '}';
+
     }
 
 }

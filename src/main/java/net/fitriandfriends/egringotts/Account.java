@@ -65,7 +65,7 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "security_question_id", referencedColumnName = "security_question_id")
-    private SecurityQuestion securityquestion;
+    private SecurityQuestion securityQuestion;
 
     @Column(name = "security_pin")
     private int securityPIN;
@@ -73,7 +73,8 @@ public class Account {
     // Constructors
     public Account() {}
 
-    public Account(User user, String fullName, String gender, Date dateOfBirth, Address addressID, UserImage userImage, String emailAddress, String username, String password, String telephoneNumber, SecurityQuestion securityquestion, int securityPIN) {
+    public Account(User user, String fullName, String gender, Date dateOfBirth, Address addressID, UserImage userImage, String emailAddress, String username, String password, String telephoneNumber, SecurityQuestion securityQuestion, int securityPIN) {
+
         this.user = user;
         this.fullName = fullName;
         this.gender = gender;
@@ -84,8 +85,9 @@ public class Account {
         this.username = username;
         this.password = password;
         this.telephoneNumber = telephoneNumber;
-        this.securityquestion = securityquestion;
+        this.securityQuestion = securityQuestion;
         this.securityPIN = securityPIN;
+
     }
 
     // Accessor and mutator methods
@@ -201,12 +203,12 @@ public class Account {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public SecurityQuestion getSecurityquestion() {
-        return securityquestion;
+    public SecurityQuestion getSecurityQuestion() {
+        return securityQuestion;
     }
 
-    public void setSecurityquestion(SecurityQuestion securityquestion) {
-        this.securityquestion = securityquestion;
+    public void setSecurityQuestion(SecurityQuestion securityquestion) {
+        this.securityQuestion = securityquestion;
     }
 
     public int getSecurityPIN() {
@@ -235,7 +237,7 @@ public class Account {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", telephoneNumber='" + telephoneNumber + '\'' +
-                ", securityquestion=" + securityquestion +
+                ", securityquestion=" + securityQuestion +
                 ", securityPIN=" + securityPIN +
                 '}';
     }
