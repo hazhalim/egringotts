@@ -8,7 +8,8 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    List<Account> getAllAccounts();
+    List<Account> findAll();
+    Account findByUsername(String username);
 
     // Query methods
 
