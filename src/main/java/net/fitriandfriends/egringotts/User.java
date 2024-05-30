@@ -4,15 +4,16 @@ import jakarta.persistence.*;
 
 @Entity
 @Table
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public abstract class User {
 
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userID")
     private Long userID;
 
-    @Column(insertable = false, updatable = false)
+    @Column(name = "type")
     String type;
 
     // Constructors
@@ -25,7 +26,6 @@ public abstract class User {
     }
 
     // Accessor and mutator methods
-
     public Long getUserID() {
         return userID;
     }
@@ -48,6 +48,15 @@ public abstract class User {
 
         }
 
+    }
+
+    // Other methods
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", type='" + type + '\'' +
+                '}';
     }
 
 }

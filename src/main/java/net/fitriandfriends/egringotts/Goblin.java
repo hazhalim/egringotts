@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("Goblin")
 public class Goblin extends User {
 
+    // Constructor
     public Goblin() {
 
         super("Goblin");

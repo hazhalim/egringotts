@@ -9,19 +9,17 @@ public class UserImage {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userImageID")
     private Long userImageID;
 
-    @JoinColumn(name = "account_id")
-    private Long accountId;
-
+    @Column(name = "imagePath")
     private String imagePath;
 
     // Constructors
     public UserImage() {}
 
-    public UserImage(Long accountId, String imagePath) {
+    public UserImage(String imagePath) {
 
-        this.accountId = accountId;
         this.imagePath = imagePath;
 
     }
@@ -44,5 +42,12 @@ public class UserImage {
     }
 
     // Other methods
+    @Override
+    public String toString() {
+        return "UserImage{" +
+                "userImageID=" + userImageID +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
+    }
 
 }

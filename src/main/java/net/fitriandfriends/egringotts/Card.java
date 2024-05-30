@@ -17,10 +17,16 @@ public class Card {
     @JoinColumn(name = "accountID", referencedColumnName = "accountID")
     private Account account;
 
+    @Column(name = "cardNumber")
     private String cardNumber;
+
+    @Column(name = "cvv")
     private String cvv;
+
+    @Column(name = "expiryDate")
     private Date expiryDate;
 
+    // Constructors
     public Card() {}
 
     public Card(Long cardID, Account account, String cardNumber, String cvv, Date expiryDate) {
@@ -70,4 +76,17 @@ public class Card {
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
+
+    // Other methods
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardID=" + cardID +
+                ", account=" + account +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", cvv='" + cvv + '\'' +
+                ", expiryDate=" + expiryDate +
+                '}';
+    }
+
 }

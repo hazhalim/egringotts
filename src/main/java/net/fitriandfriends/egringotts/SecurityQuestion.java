@@ -5,19 +5,27 @@ import jakarta.persistence.*;
 @Entity
 @Table
 public class SecurityQuestion {
+
+    // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "securityQuestionID")
     private Long securityQuestionID;
+
+    @Column(name = "question")
     private String question;
 
+    // Constructors
     public SecurityQuestion() {
     }
 
-    public SecurityQuestion(Long securityQuestionID, String question) {
-        this.securityQuestionID = securityQuestionID;
+    public SecurityQuestion(String question) {
+
         this.question = question;
+
     }
 
+    // Accessor and mutator methods
     public Long getSecurityQuestionID() {
         return securityQuestionID;
     }
@@ -33,4 +41,13 @@ public class SecurityQuestion {
     public void setQuestion(String question) {
         this.question = question;
     }
+
+    // Other methods
+    @Override
+    public String toString() {
+        return "SecurityQuestion{" +
+                "question='" + question + '\'' +
+                '}';
+    }
+
 }

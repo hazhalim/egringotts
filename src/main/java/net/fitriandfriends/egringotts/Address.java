@@ -9,17 +9,44 @@ public class Address {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "addressID")
     private Long addressID;
+
+    @Column(name = "type")
     private String type;
+
+    @Column(name = "streetName1")
     private String streetName1;
+
+    @Column(name = "streetName2")
     private String streetName2;
+
+    @Column(name = "town")
     private String town;
+
+    @Column(name = "state")
     private String state;
+
+    @Column(name = "postcode")
     private String postcode;
+
+    @Column(name = "country")
     private String country;
 
-    // Constructor
+    // Constructors
     public Address() {}
+
+    public Address(String type, String streetName1, String streetName2, String town, String state, String postcode, String country) {
+
+        this.type = type;
+        this.streetName1 = streetName1;
+        this.streetName2 = streetName2;
+        this.town = town;
+        this.state = state;
+        this.postcode = postcode;
+        this.country = country;
+
+    }
 
     public Address(String streetName1, String streetName2, String town, String state, String postcode, String country) {
 

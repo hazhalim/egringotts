@@ -5,27 +5,33 @@ import jakarta.persistence.*;
 @Entity
 @Table
 public class Balance {
+
+    // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "balanceID")
     private Long balanceID;
 
     @ManyToOne
     @JoinColumn(name = "accountID", referencedColumnName = "accountID")
     private Account account;
 
+    @Column(name = "currency")
     private String currency;
+
+    @Column(name = "balance")
     private Double balance;
 
-    public Balance() {
-    }
+    // Constructors
+    public Balance() {}
 
-    public Balance(Long balanceID, Account account, String currency, Double balance) {
-        this.balanceID = balanceID;
+    public Balance(Account account, String currency, Double balance) {
         this.account = account;
         this.currency = currency;
         this.balance = balance;
     }
 
+    // Accessor and mutator methods
     public Long getBalanceID() {
         return balanceID;
     }
@@ -57,4 +63,16 @@ public class Balance {
     public void setBalance(Double balance) {
         this.balance = balance;
     }
+
+    // Other methods
+    @Override
+    public String toString() {
+        return "Balance{" +
+                "balanceID=" + balanceID +
+                ", account=" + account +
+                ", currency='" + currency + '\'' +
+                ", balance=" + balance +
+                '}';
+    }
+
 }

@@ -8,27 +8,38 @@ import java.util.Date;
 @Table
 public class Transaction {
 
+    // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transactionID")
     private Long transactionId;
 
     @ManyToOne
     @JoinColumn(name = "fromAccountID", referencedColumnName = "accountID")
     private Account fromAccount;
+
     @ManyToOne
     @JoinColumn(name = "toAccountID", referencedColumnName = "accountID")
     private Account toAccount;
+
+    @Column(name = "amount")
     private Double amount;
+
+    @Column(name = "currency")
     private String currency;
 
+    @Column(name = "fromAccountBalance")
     private Double fromAccountBalance;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date")
     private Date date;
+
+    @Column(name = "category")
     private String category;
 
-    public Transaction() {
-    }
+    // Constructors
+    public Transaction() {}
 
     public Transaction(Account fromAccount, Account toAccount, Double amount, String currency, Double fromAccountBalance, String category) {
         this.fromAccount = fromAccount;
@@ -40,6 +51,7 @@ public class Transaction {
         this.category = category;
     }
 
+    // Accessor and mutator methods
     public Long getTransactionId() {
         return transactionId;
     }
@@ -103,4 +115,20 @@ public class Transaction {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    // Other methods
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId +
+                ", fromAccount=" + fromAccount +
+                ", toAccount=" + toAccount +
+                ", amount=" + amount +
+                ", currency='" + currency + '\'' +
+                ", fromAccountBalance=" + fromAccountBalance +
+                ", date=" + date +
+                ", category='" + category + '\'' +
+                '}';
+    }
+
 }

@@ -3,7 +3,6 @@ package net.fitriandfriends.egringotts;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table
@@ -13,6 +12,7 @@ public class Account {
     // Important account details
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "accountID")
     private Long accountID;
 
     @OneToOne
@@ -20,23 +20,27 @@ public class Account {
     private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "creationDate")
     private Date creationDate;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "closingDate")
     private Date closingDate;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "lastLoginDate")
     private Date lastLoginDate;
 
     // Account holder information
+    @Column(name = "fullName")
     private String fullName;
 
+    @Column(name = "gender")
     private String gender;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dateOfBirth")
     private Date dateOfBirth;
-
-//    List<Transaction> transactions;
 
     @OneToOne
     @JoinColumn(name = "addressID", referencedColumnName = "addressID")
@@ -47,15 +51,23 @@ public class Account {
     private UserImage userImage;
 
     // Account access information
+    @Column(name = "emailAddress")
     private String emailAddress;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "telephoneNumber")
     private String telephoneNumber;
+
     @ManyToOne
     @JoinColumn(name = "securityQuestionID", referencedColumnName = "securityQuestionID")
     private SecurityQuestion securityquestion;
 
+    @Column(name = "securityPIN")
     private int securityPIN;
 
     // Constructors
@@ -76,6 +88,7 @@ public class Account {
         this.securityPIN = securityPIN;
     }
 
+    // Accessor and mutator methods
     public Long getAccountID() {
         return accountID;
     }
@@ -203,4 +216,28 @@ public class Account {
     public void setSecurityPIN(int securityPIN) {
         this.securityPIN = securityPIN;
     }
+
+    // Other methods
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountID=" + accountID +
+                ", user=" + user +
+                ", creationDate=" + creationDate +
+                ", closingDate=" + closingDate +
+                ", lastLoginDate=" + lastLoginDate +
+                ", fullName='" + fullName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", addressID=" + addressID +
+                ", userImage=" + userImage +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", securityquestion=" + securityquestion +
+                ", securityPIN=" + securityPIN +
+                '}';
+    }
+
 }
