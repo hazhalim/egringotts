@@ -12,6 +12,7 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
 
+    @Column(insertable = false, updatable = false)
     String type;
 
     // Constructors
