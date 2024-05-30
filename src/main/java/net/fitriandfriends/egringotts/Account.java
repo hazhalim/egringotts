@@ -43,6 +43,8 @@ public class Account {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfBirth;
 
+//    List<Transaction> transactions;
+
     @Embedded
     private Address mailingAddress;
 
@@ -75,9 +77,9 @@ public class Account {
     })
     private TelephoneNumber workTelephoneNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "security_question_set_id", referencedColumnName = "id")
-    private SecurityQuestionSet securityQuestionSet;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "security_question_set_id", referencedColumnName = "id")
+//    private SecurityQuestionSet securityQuestionSet;
 
     private int securityPIN;
 
@@ -88,7 +90,7 @@ public class Account {
     // Constructors
     public Account() {}
 
-    public Account(User user, Date lastLoginDate, String givenName, String middleName, String lastName, String gender, Date dateOfBirth, Address mailingAddress, Address billingAddress, User userType, String emailAddress, String username, String password, TelephoneNumber homeTelephoneNumber, TelephoneNumber mobileTelephoneNumber, TelephoneNumber workTelephoneNumber, SecurityQuestionSet securityQuestionSet, int securityPIN) {
+    public Account(User user, Date lastLoginDate, String givenName, String middleName, String lastName, String gender, Date dateOfBirth, Address mailingAddress, Address billingAddress, User userType, String emailAddress, String username, String password, TelephoneNumber homeTelephoneNumber, TelephoneNumber mobileTelephoneNumber, TelephoneNumber workTelephoneNumber, int securityPIN) {
 
         this.user = user;
         this.creationDate = new Date();
@@ -97,20 +99,20 @@ public class Account {
         this.lastLogoutDate = null;
         this.lastActivityDate = null;
         this.givenName = givenName;
-        this.middleName = middleName;
+//        this.middleName = middleName;
         this.lastName = lastName;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.mailingAddress = mailingAddress;
         this.billingAddress = billingAddress;
-        this.userType = userType;
+//        this.userType = userType;
         this.emailAddress = emailAddress;
         this.username = username;
         this.password = password;
         this.homeTelephoneNumber = homeTelephoneNumber;
         this.mobileTelephoneNumber = mobileTelephoneNumber;
         this.workTelephoneNumber = workTelephoneNumber;
-        this.securityQuestionSet = securityQuestionSet;
+//        this.securityQuestionSet = securityQuestionSet;
         this.securityPIN = securityPIN;
 
     }
@@ -180,13 +182,13 @@ public class Account {
         this.givenName = givenName;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
+//    public String getMiddleName() {
+//        return middleName;
+//    }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
+//    public void setMiddleName(String middleName) {
+//        this.middleName = middleName;
+//    }
 
     public String getLastName() {
         return lastName;
@@ -228,13 +230,13 @@ public class Account {
         this.billingAddress = billingAddress;
     }
 
-    public User getUserType() {
-        return userType;
-    }
+//    public User getUserType() {
+//        return userType;
+//    }
 
-    public void setUserType(User userType) {
-        this.userType = userType;
-    }
+//    public void setUserType(User userType) {
+//        this.userType = userType;
+//    }
 
     public UserImage getUserImage() {
         return userImage;
@@ -292,13 +294,13 @@ public class Account {
         this.workTelephoneNumber = workTelephoneNumber;
     }
 
-    public SecurityQuestionSet getSecurityQuestionSet() {
-        return securityQuestionSet;
-    }
+//    public SecurityQuestionSet getSecurityQuestionSet() {
+//        return securityQuestionSet;
+//    }
 
-    public void setSecurityQuestionSet(SecurityQuestionSet securityQuestionSet) {
-        this.securityQuestionSet = securityQuestionSet;
-    }
+//    public void setSecurityQuestionSet(SecurityQuestionSet securityQuestionSet) {
+//        this.securityQuestionSet = securityQuestionSet;
+//    }
 
     public int getSecurityPIN() {
         return securityPIN;
@@ -320,20 +322,20 @@ public class Account {
                 ", lastLogoutDate=" + lastLogoutDate +
                 ", lastActivityDate=" + lastActivityDate +
                 ", givenName='" + givenName + '\'' +
-                ", middleName='" + middleName + '\'' +
+//                ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", mailingAddress=" + mailingAddress +
                 ", billingAddress=" + billingAddress +
-                ", userType=" + userType +
+//                ", userType=" + userType +
                 ", emailAddress='" + emailAddress + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", homeTelephoneNumber=" + homeTelephoneNumber +
                 ", mobileTelephoneNumber=" + mobileTelephoneNumber +
                 ", workTelephoneNumber=" + workTelephoneNumber +
-                ", securityQuestionSet=" + securityQuestionSet +
+//                ", securityQuestionSet=" + securityQuestionSet +
                 ", securityPIN=" + securityPIN +
                 '}';
 
