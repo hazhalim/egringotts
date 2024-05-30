@@ -13,10 +13,10 @@ public class Transaction {
     private Long transactionId;
 
     @ManyToOne
-    @JoinColumn(name = "fromAccountID", referencedColumnName = "fromAccountID")
+    @JoinColumn(name = "fromAccountID", referencedColumnName = "accountID")
     private Account fromAccount;
     @ManyToOne
-    @JoinColumn(name = "toAccountID", referencedColumnName = "toAccountID")
+    @JoinColumn(name = "toAccountID", referencedColumnName = "accountID")
     private Account toAccount;
     private Double amount;
     private String currency;

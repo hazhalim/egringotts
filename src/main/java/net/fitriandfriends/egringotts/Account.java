@@ -16,7 +16,7 @@ public class Account {
     private Long accountID;
 
     @OneToOne
-    @JoinColumn(name = "userID",referencedColumnName = "userID")
+    @JoinColumn(name = "userID", referencedColumnName = "userID")
     private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
