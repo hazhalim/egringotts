@@ -9,6 +9,7 @@ public class Address {
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long addressID;
     private String type;
     private String streetName1;
     private String streetName2;
