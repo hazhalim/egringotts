@@ -21,11 +21,11 @@ public class CurrencyConversionRate {
     private Long currencyConversionRateID;
 
     @ManyToOne
-    @Column(name = "from_currency_id")
+    @JoinColumn(name = "from_currency_id", referencedColumnName = "currency_id")
     private Currency fromCurrency;
 
     @ManyToOne
-    @Column(name = "to_currency_id")
+    @JoinColumn(name = "to_currency_id", referencedColumnName = "currency_id")
     private Currency toCurrency;
 
     @Column(name = "rate")

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Getter
@@ -126,151 +127,254 @@ public class WeightedGraph<T extends Comparable<T>, N extends Comparable<N>> {
 
    }
    
-   public int getIndex(T v) {
-      Vertex<T,N> temp = head;
-      int pos=0;
-      while (temp!=null)	{
-         if ( temp.vertexInformation.compareTo( v ) == 0 )
-            return pos;
-         temp=temp.nextVertex;
-         pos+=1;
+   public int getIndex(T vertex) {
+
+      Vertex<T, N> temp = head;
+
+      int position = 0;
+
+      while (temp != null) {
+
+         if (temp.vertexInformation.compareTo(vertex) == 0)
+            return position;
+
+         temp = temp.nextVertex;
+         position += 1;
+
       }
+
       return -1;
+
    }
    
-   public ArrayList<T> getAllVertexObjects() {
-      ArrayList<T> list = new ArrayList<>();
-      Vertex<T,N> temp = head;
-      while (temp!=null)	{
+   public List<T> getAllVertexObjects() {
+
+      List<T> list = new ArrayList<>();
+      Vertex<T, N> temp = head;
+
+      while (temp != null) {
+
          list.add(temp.vertexInformation);
-         temp=temp.nextVertex;
+
+         temp = temp.nextVertex;
+
       }
+
       return list;
+
    }
 
-   public ArrayList<Vertex<T,N>> getAllVertices() {
-      ArrayList<Vertex<T,N>> list = new ArrayList<>();
-      Vertex<T,N> temp = head;
-      while (temp!=null)	{
+   public List<Vertex<T, N>> getAllVertices() {
+
+      List<Vertex<T,N>> list = new ArrayList<>();
+
+      Vertex<T, N> temp = head;
+
+      while (temp != null) {
+
          list.add(temp);
-         temp=temp.nextVertex;
+
+         temp = temp.nextVertex;
+
       }
+
       return list;
+
    }
    
-   public T getVertex(int pos) {
-      if (pos>size-1 || pos<0) 
+   public T getVertex(int position) {
+
+      if (position > size - 1 || position < 0)
          return null;
-      Vertex<T,N> temp = head;
-      for (int i=0; i<pos; i++)
-         temp=temp.nextVertex;
+
+      Vertex<T, N> temp = head;
+
+      for (int i = 0; i < position; i++)
+         temp = temp.nextVertex;
+
       return temp.vertexInformation;
+
    }
 
-   public boolean addEdge(T source, T destination, N w)   {
-      if (head==null)
+   public boolean addEdge(T source, T destination, N weight) {
+
+      if (head == null)
          return false;
+
       if (!hasVertex(source) || !hasVertex(destination)) 
          return false;
-      Vertex<T,N> sourceVertex = head;
-      while (sourceVertex!=null)	{
-         if ( sourceVertex.vertexInformation.compareTo( source ) == 0 )   {
+
+      Vertex<T, N> sourceVertex = head;
+
+      while (sourceVertex != null) {
+
+         if (sourceVertex.vertexInformation.compareTo(source) == 0) {
+
             // Reached source vertex, look for destination now
-            Vertex<T,N> destinationVertex = head;
-            while (destinationVertex!=null)	{
-               if ( destinationVertex.vertexInformation.compareTo( destination ) == 0 )   {
+            Vertex<T, N> destinationVertex = head;
+
+            while (destinationVertex != null) {
+
+               if (destinationVertex.vertexInformation.compareTo(destination) == 0) {
+
                   // Reached destination vertex, add edge here
-                  Edge<T,N> currentEdge = sourceVertex.firstEdge;
-                  Edge<T,N> newEdge = new Edge<>(destinationVertex, w, currentEdge);
-                  sourceVertex.firstEdge=newEdge;
+                  Edge<T, N> currentEdge = sourceVertex.firstEdge;
+
+                  sourceVertex.firstEdge = new Edge<>(destinationVertex, weight, currentEdge);
                   sourceVertex.outDegree++;
                   destinationVertex.inDegree++;
+
                   return true;
+
                }
-               destinationVertex=destinationVertex.nextVertex;
+
+               destinationVertex = destinationVertex.nextVertex;
+
             }
+
          }
-         sourceVertex=sourceVertex.nextVertex;
+
+         sourceVertex = sourceVertex.nextVertex;
+
       }
+
       return false;
+
    }
    
    public boolean hasEdge(T source, T destination) {
-      if (head==null)
+
+      if (head == null)
          return false;
       if (!hasVertex(source) || !hasVertex(destination)) 
          return false;
-      Vertex<T,N> sourceVertex = head;
-      while (sourceVertex!=null)	{
-         if ( sourceVertex.vertexInformation.compareTo( source ) == 0 )   {
-            // Reached source vertex, look for destination now 
-            Edge<T,N> currentEdge = sourceVertex.firstEdge;
+
+      Vertex<T, N> sourceVertex = head;
+
+      while (sourceVertex != null) {
+
+         if (sourceVertex.vertexInformation.compareTo(source) == 0) {
+
+            // Reached source vertex, look for destination now
+            Edge<T, N> currentEdge = sourceVertex.firstEdge;
+
             while (currentEdge != null) {
-               if (currentEdge.toVertex.vertexInformation.compareTo(destination)==0)
+
+               if (currentEdge.toVertex.vertexInformation.compareTo(destination) == 0)
                // destination vertex found 
                   return true;
-               currentEdge=currentEdge.nextEdge;
+
+               currentEdge = currentEdge.nextEdge;
+
             }
+
          }
-         sourceVertex=sourceVertex.nextVertex;
+
+         sourceVertex = sourceVertex.nextVertex;
+
       }
+
       return false;
+
    }
    
    public N getEdgeWeight(T source, T destination) {
-      N notFound=null;
-      if (head==null)
+
+      N notFound = null;
+
+      if (head == null)
          return notFound;
+
       if (!hasVertex(source) || !hasVertex(destination)) 
          return notFound;
-      Vertex<T,N> sourceVertex = head;
-      while (sourceVertex!=null)	{
-         if ( sourceVertex.vertexInformation.compareTo( source ) == 0 )   {
+
+      Vertex<T, N> sourceVertex = head;
+
+      while (sourceVertex != null) {
+
+         if (sourceVertex.vertexInformation.compareTo(source) == 0) {
+
             // Reached source vertex, look for destination now 
-            Edge<T,N> currentEdge = sourceVertex.firstEdge;
+            Edge<T, N> currentEdge = sourceVertex.firstEdge;
+
             while (currentEdge != null) {
-               if (currentEdge.toVertex.vertexInformation.compareTo(destination)==0)
+
+               if (currentEdge.toVertex.vertexInformation.compareTo(destination) == 0)
                // destination vertex found 
                   return currentEdge.weight;
-               currentEdge=currentEdge.nextEdge;
+
+               currentEdge = currentEdge.nextEdge;
+
             }
+
          }
-         sourceVertex=sourceVertex.nextVertex;
+
+         sourceVertex = sourceVertex.nextVertex;
+
       }
+
       return notFound;
+
    }
    
-   public ArrayList<T> getNeighbours (T v)  {
-      if (!hasVertex(v))
+   public List<T> getNeighbours(T vertex) {
+
+      if (!hasVertex(vertex))
          return null;
-      ArrayList<T> list = new ArrayList<T>();
-      Vertex<T,N> temp = head;
-      while (temp!=null)	{
-         if ( temp.vertexInformation.compareTo( v ) == 0 )   {
+
+      List<T> list = new ArrayList<>();
+
+      Vertex<T, N> temp = head;
+
+      while (temp != null) {
+
+         if (temp.vertexInformation.compareTo(vertex) == 0) {
+
             // Reached vertex, look for destination now
-            Edge<T,N> currentEdge = temp.firstEdge;
+            Edge<T, N> currentEdge = temp.firstEdge;
+
             while (currentEdge != null) {
+
                list.add(currentEdge.toVertex.vertexInformation);
-               currentEdge=currentEdge.nextEdge;
+
+               currentEdge = currentEdge.nextEdge;
+
             }
+
          }
-         temp=temp.nextVertex;
+
+         temp = temp.nextVertex;
+
       }
-      return list;   
+
+      return list;
+
    }
    
-   public void printEdges()   {
-      Vertex<T,N> temp=head;
-      while (temp!=null) {
+   public void printEdges() {
+
+      Vertex<T, N> temp = head;
+
+      while (temp != null) {
+
          System.out.print("# " + temp.vertexInformation + " : " );
-         Edge<T,N> currentEdge = temp.firstEdge;
+
+         Edge<T, N> currentEdge = temp.firstEdge;
+
          while (currentEdge != null) {
-            System.out.print("[" + temp.vertexInformation + "," + currentEdge.toVertex.vertexInformation +"] " );
-            currentEdge=currentEdge.nextEdge;
+
+            System.out.print("[" + temp.vertexInformation + ", " + currentEdge.toVertex.vertexInformation +"] ");
+
+            currentEdge = currentEdge.nextEdge;
+
          }
+
          System.out.println();
-         temp=temp.nextVertex;
-      }  
+
+         temp = temp.nextVertex;
+
+      }
+
    }
 
    public void clear() {
@@ -280,4 +384,3 @@ public class WeightedGraph<T extends Comparable<T>, N extends Comparable<N>> {
    }
 
 }
-
