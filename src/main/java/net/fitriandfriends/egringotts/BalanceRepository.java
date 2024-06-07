@@ -17,11 +17,11 @@ public interface BalanceRepository extends JpaRepository<Balance, Long> {
     // Find all balances of an account ID
     public List<Balance> findByAccount_AccountID(Long accountID);
 
-    // Find a balance of a certain currency of an account
-    public Balance findByAccountAndCurrency(Account account, String currency);
 
-    // Find a balance of a certain currency of an account at a certain account ID
-    public Balance findByAccount_AccountIDAndCurrency(Long accountID, String currency);
+    public Balance findByAccountAndCurrency_CurrencyID(Account account, Long currencyID);
+    public Balance findByAccountAndCurrency(Account account, Currency currency);
+    public Balance findByAccount_AccountIDAndCurrency(Long accountID, Currency currency);
+    public Balance findByAccount_AccountIDAndCurrency_CurrencyID(Long accountID, Long currencyID);
 
     // Other queries
 

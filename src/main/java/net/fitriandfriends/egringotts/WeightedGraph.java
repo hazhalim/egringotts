@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Getter
@@ -196,6 +195,26 @@ public class WeightedGraph<T extends Comparable<T>, N extends Comparable<N>> {
 
    }
 
+   public T getVertex(T vertex) {
+
+      if (!hasVertex(vertex))
+         return null;
+
+      Vertex<T, N> temp = head;
+
+      for (int i = 0; i < size; i++) {
+
+         if (temp.vertexInformation.compareTo(vertex) == 0)
+            return temp.vertexInformation;
+
+         temp = temp.nextVertex;
+
+      }
+
+      return null;
+
+   }
+
    public boolean addEdge(T source, T destination, N weight) {
 
       if (head == null)
@@ -380,6 +399,50 @@ public class WeightedGraph<T extends Comparable<T>, N extends Comparable<N>> {
    public void clear() {
 
       head = null;
+
+   }
+
+   // Implementation of Dijkstra's algorithm to find the shortest path between two vertices (currencies)
+   public Map<T, N> shortestPath(T startVertex) {
+
+      Map<T, N> distances = new HashMap<>();
+      PriorityQueue<VertexDistancePair<T, N>> pq = new PriorityQueue<>();
+
+      for (Vertex<T, N> vertex : getAllVertices()) {
+
+         // Null here represents a distance of infinity
+         distances.put(vertex.vertexInformation, null);
+
+      }
+
+      distances.put(startVertex, (N) (Double) 0.0);
+
+      pq.add(new VertexDistancePair<>(startVertex, (N) (Double) 0.0));
+
+      while (!pq.isEmpty()) {
+
+         VertexDistancePair<T, N> current = pq.poll();
+
+         T currentVertex = current.getVertex();
+         N currentDistance = current.getDistance();
+
+         for (T neighbor : getNeighbours(currentVertex)) {
+
+            N edgeWeight = getEdgeWeight(currentVertex, neighbor);
+            N newDist = (N) (Double) ((Double) currentDistance + (Double) edgeWeight);
+
+            if (distances.get(neighbor) == null || (Double) newDist < (Double) distances.get(neighbor)) {
+
+               distances.put(neighbor, newDist);
+               pq.add(new VertexDistancePair<>(neighbor, newDist));
+
+            }
+
+         }
+
+      }
+
+      return distances;
 
    }
 

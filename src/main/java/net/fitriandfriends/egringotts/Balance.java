@@ -24,8 +24,9 @@ public class Balance {
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
-    @Column(name = "currency")
-    private String currency;
+    @ManyToOne
+    @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
+    private Currency currency;
 
     @Column(name = "balance")
     private Double balance;
@@ -33,7 +34,7 @@ public class Balance {
     // Constructors
     public Balance() {}
 
-    public Balance(Account account, String currency, Double balance) {
+    public Balance(Account account, Currency currency, Double balance) {
         this.account = account;
         this.currency = currency;
         this.balance = balance;

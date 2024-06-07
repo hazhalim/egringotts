@@ -34,9 +34,9 @@ public class BalanceController {
     }
 
     @GetMapping("/account/{accountID}/{currency}")
-    public ResponseEntity<Balance> getBalancesByAccountId(@PathVariable Long accountID, @PathVariable String currency) {
+    public ResponseEntity<Balance> getBalanceByAccountId(@PathVariable Long accountID, @PathVariable Long currencyID) {
 
-        Balance balance = balanceService.getCurrencyBalanceByAccountId(accountID, currency);
+        Balance balance = balanceService.getBalanceByAccountIdAndCurrencyId(accountID, currencyID);
 
         if (balance == null) {
 

@@ -34,7 +34,7 @@ public class TransactionReceiptGenerator {
         dataModel.put("fromAccountFullName", fromAccount.getFullName());
         dataModel.put("toAccountFullName", toAccount.getFullName());
         dataModel.put("amount", transaction.getAmount());
-        dataModel.put("currency", transaction.getCurrency());
+        dataModel.put("currency", transaction.getCurrency().getAbbreviation());
         dataModel.put("paymentMethod", transaction.getPaymentMethod());
 
         String cardNumber = transaction.getCard().getCardNumber();

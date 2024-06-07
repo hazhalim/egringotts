@@ -12,13 +12,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CurrencyConversionRate {
+public class CurrencyExchange {
 
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "currency_conversion_rate_id")
-    private Long currencyConversionRateID;
+    @Column(name = "currency_exchange_rate_id")
+    private Long currencyExchangeRateID;
 
     @ManyToOne
     @JoinColumn(name = "from_currency_id", referencedColumnName = "currency_id")
@@ -32,9 +32,9 @@ public class CurrencyConversionRate {
     private Double rate;
 
     // Constructors
-    public CurrencyConversionRate() {}
+    public CurrencyExchange() {}
 
-    public CurrencyConversionRate(Currency fromCurrency, Currency toCurrency, Double rate) {
+    public CurrencyExchange(Currency fromCurrency, Currency toCurrency, Double rate) {
 
         this.fromCurrency = fromCurrency;
         this.toCurrency = toCurrency;

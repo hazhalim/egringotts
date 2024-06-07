@@ -22,9 +22,9 @@ public class BalanceService {
 
     // Get a balance of a certain currency of an account
     @Cacheable("currencyBalanceByAccountId")
-    public Balance getCurrencyBalanceByAccountId(Long accountID, String currency) {
+    public Balance getBalanceByAccountIdAndCurrencyId(Long accountID, Long currencyID) {
 
-        return balanceRepository.findByAccount_AccountIDAndCurrency(accountID, currency);
+        return balanceRepository.findByAccount_AccountIDAndCurrency_CurrencyID(accountID, currencyID);
 
     }
 

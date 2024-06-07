@@ -41,8 +41,9 @@ public class Transaction {
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "currency")
-    private String currency;
+    @ManyToOne
+    @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
+    private Currency currency;
 
     @Column(name = "from_account_balance")
     private Double fromAccountBalance;
@@ -60,7 +61,7 @@ public class Transaction {
     // Constructors
     public Transaction() {}
 
-    public Transaction(Account fromAccount, Account toAccount, String paymentMethod, Card card, Double amount, String currency, Double fromAccountBalance, Date date, String category, String receiptFileName) {
+    public Transaction(Account fromAccount, Account toAccount, String paymentMethod, Card card, Double amount, Currency currency, Double fromAccountBalance, Date date, String category, String receiptFileName) {
 
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
