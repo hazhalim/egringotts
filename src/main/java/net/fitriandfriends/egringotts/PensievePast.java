@@ -1,11 +1,21 @@
 package net.fitriandfriends.egringotts;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+@Setter
+@Getter
+@Data
+@ToString
 public class PensievePast {
 
+    // Accessor and mutator methods
     // Instance variable
     private Stack<Transaction> transactionStack;
 
@@ -13,19 +23,6 @@ public class PensievePast {
     public PensievePast() {
 
         transactionStack = new Stack<>();
-
-    }
-
-    // Accessor and mutator methods
-    public Stack<Transaction> getTransactionStack() {
-
-        return this.transactionStack;
-
-    }
-
-    public void setTransactionStack(Stack<Transaction> transactionStack) {
-
-        this.transactionStack= transactionStack;
 
     }
 

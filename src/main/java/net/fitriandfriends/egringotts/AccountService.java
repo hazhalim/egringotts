@@ -1,6 +1,9 @@
 package net.fitriandfriends.egringotts;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,7 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @CacheEvict(value = {"accountsSortedAscending", "accountsSortedDescending", "accountsByFullName", "accountsByTelephoneNumber"}, allEntries = true)
     public Account createAccount(Account account) {
 
         return accountRepository.save(account);
@@ -20,6 +24,7 @@ public class AccountService {
     }
 
     // Get all accounts sorted by a certain criteria in ascending order
+    @Cacheable("accountsSortedAscending")
     public List<Account> getAllAccountsSortedAscending(String sortBy) {
 
         Sort sort = Sort.by(sortBy).ascending();
@@ -29,6 +34,7 @@ public class AccountService {
     }
 
     // Get all accounts sorted by a certain criteria in descending order
+    @Cacheable("accountsSortedDescending")
     public List<Account> getAllAccountsSortedDescending(String sortBy) {
 
         Sort sort = Sort.by(sortBy).descending();
@@ -38,6 +44,7 @@ public class AccountService {
     }
 
     // Search for any account by full name
+    @Cacheable("accountsByFullName")
     public List<Account> searchMatchingAccountsByFullName(String fullName) {
 
         return accountRepository.findByFullNameContainingIgnoreCase(fullName);
@@ -67,6 +74,7 @@ public class AccountService {
 //    }
 
     // Search for any account by telephone number
+    @Cacheable("accountsByTelephoneNumber")
     public List<Account> searchMatchingAccountsByTelephoneNumber(String telephoneNumber) {
 
         return accountRepository.findByTelephoneNumberContaining(telephoneNumber);

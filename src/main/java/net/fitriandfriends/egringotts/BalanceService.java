@@ -1,6 +1,7 @@
 package net.fitriandfriends.egringotts;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class BalanceService {
     private BalanceRepository balanceRepository;
 
     // Get all balances of an account
+    @Cacheable("balancesByAccountId")
     public List<Balance> getBalancesByAccountId(Long accountID) {
 
         return balanceRepository.findByAccount_AccountID(accountID);
@@ -19,6 +21,7 @@ public class BalanceService {
     }
 
     // Get a balance of a certain currency of an account
+    @Cacheable("currencyBalanceByAccountId")
     public Balance getCurrencyBalanceByAccountId(Long accountID, String currency) {
 
         return balanceRepository.findByAccount_AccountIDAndCurrency(accountID, currency);

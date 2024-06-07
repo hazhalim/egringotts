@@ -2,10 +2,15 @@ package net.fitriandfriends.egringotts;
 
 import jakarta.persistence.*;
 
+import lombok.Data;
+import lombok.ToString;
+
 import java.util.Date;
 
 @Entity
 @Table
+@Data
+@ToString
 public class Account {
 
     // Instance variables
@@ -111,156 +116,8 @@ public class Account {
 
     }
 
-    // Accessor and mutator methods
-    public Long getAccountID() {
-        return accountID;
-    }
-
-    public void setAccountID(Long accountID) {
-        this.accountID = accountID;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Date getClosingDate() {
-        return closingDate;
-    }
-
-    public void setClosingDate(Date closingDate) {
-        this.closingDate = closingDate;
-    }
-
-    public Date getLastLoginDate() {
-        return lastLoginDate;
-    }
-
-    public void setLastLoginDate(Date lastLoginDate) {
-        this.lastLoginDate = lastLoginDate;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Address getAddressID() {
-        return addressID;
-    }
-
-    public void setAddressID(Address addressID) {
-        this.addressID = addressID;
-    }
-
-    public UserImage getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(UserImage userImage) {
-        this.userImage = userImage;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getTelephoneNumber() {
-        return telephoneNumber;
-    }
-
-    public void setTelephoneNumber(String telephoneNumber) {
-        this.telephoneNumber = telephoneNumber;
-    }
-
-    public SecurityQuestion getSecurityQuestion() {
-        return securityQuestion;
-    }
-
-    public void setSecurityQuestion(SecurityQuestion securityquestion) {
-        this.securityQuestion = securityquestion;
-    }
-
-    public int getSecurityPIN() {
-        return securityPIN;
-    }
-
-    public void setSecurityPIN(int securityPIN) {
-        this.securityPIN = securityPIN;
-    }
+    // Accessor, mutator, and toString methods are handled by Lombok
 
     // Other methods
-    @Override
-    public String toString() {
-        return "Account{" +
-                "accountID=" + accountID +
-                ", user=" + user +
-                ", creationDate=" + creationDate +
-                ", closingDate=" + closingDate +
-                ", lastLoginDate=" + lastLoginDate +
-                ", fullName='" + fullName + '\'' +
-                ", gender='" + gender + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", addressID=" + addressID +
-                ", userImage=" + userImage +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", telephoneNumber='" + telephoneNumber + '\'' +
-                ", securityquestion=" + securityQuestion +
-                ", securityPIN=" + securityPIN +
-                '}';
-    }
 
 }

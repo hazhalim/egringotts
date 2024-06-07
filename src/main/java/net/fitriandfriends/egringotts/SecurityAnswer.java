@@ -1,9 +1,17 @@
 package net.fitriandfriends.egringotts;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table
+@Data
+@Setter
+@Getter
+@ToString
 public class SecurityAnswer {
 
     // Instance variables
@@ -34,48 +42,6 @@ public class SecurityAnswer {
 
     }
 
-    // Accessor and mutator methods
-    public Long getSecurityAnswerID() {
-        return securityAnswerID;
-    }
-
-    public void setSecurityAnswerID(Long securityAnswerID) {
-        this.securityAnswerID = securityAnswerID;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public SecurityQuestion getSecurityQuestion() {
-        return securityQuestion;
-    }
-
-    public void setSecurityQuestion(SecurityQuestion securityQuestion) {
-        this.securityQuestion = securityQuestion;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    // Other methods
-    @Override
-    public String toString() {
-        return "SecurityAnswer{" +
-                "securityAnswerID=" + securityAnswerID +
-                ", account=" + account +
-                ", securityQuestion=" + securityQuestion +
-                ", answer='" + answer + '\'' +
-                '}';
-    }
+    // Accessor, mutator, and toString methods are handled by Lombok
 
 }

@@ -1,9 +1,13 @@
 package net.fitriandfriends.egringotts;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table
+@Data
+@ToString
 public class SecurityQuestion {
 
     // Instance variables
@@ -25,29 +29,6 @@ public class SecurityQuestion {
 
     }
 
-    // Accessor and mutator methods
-    public Long getSecurityQuestionID() {
-        return securityQuestionID;
-    }
-
-    public void setSecurityQuestionID(Long securityQuestionID) {
-        this.securityQuestionID = securityQuestionID;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    // Other methods
-    @Override
-    public String toString() {
-        return "SecurityQuestion{" +
-                "question='" + question + '\'' +
-                '}';
-    }
+    // Accessor, mutator, and toString methods are handled by Lombok
 
 }

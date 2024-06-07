@@ -33,11 +33,11 @@ public class AccountController {
     }
 
     @GetMapping("/sort")
-    public ResponseEntity<List<Account>> getSortedAccounts(@RequestParam String sortBy, @RequestParam(defaultValue = "asc") String order) {
+    public ResponseEntity<List<Account>> getSortedAccounts(@RequestParam String sortBy, @RequestParam(defaultValue = "ascending") String order) {
 
         List<Account> sortedAccounts;
 
-        if ("desc".equalsIgnoreCase(order)) {
+        if (order.equalsIgnoreCase("descending")) {
 
             sortedAccounts = accountService.getAllAccountsSortedDescending(sortBy);
 

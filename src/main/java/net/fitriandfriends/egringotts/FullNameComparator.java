@@ -1,7 +1,10 @@
 package net.fitriandfriends.egringotts;
 
+import lombok.Data;
+
 import java.util.Comparator;
 
+@Data
 public class FullNameComparator implements Comparator<Account> {
 
     // No instance variables

@@ -1,9 +1,17 @@
 package net.fitriandfriends.egringotts;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table
+@Data
+@Getter
+@Setter
+@ToString
 public class Balance {
 
     // Instance variables
@@ -31,48 +39,6 @@ public class Balance {
         this.balance = balance;
     }
 
-    // Accessor and mutator methods
-    public Long getBalanceID() {
-        return balanceID;
-    }
-
-    public void setBalanceID(Long balanceID) {
-        this.balanceID = balanceID;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Double balance) {
-        this.balance = balance;
-    }
-
-    // Other methods
-    @Override
-    public String toString() {
-        return "Balance{" +
-                "balanceID=" + balanceID +
-                ", account=" + account +
-                ", currency='" + currency + '\'' +
-                ", balance=" + balance +
-                '}';
-    }
+    // Accessor, mutator, and toString methods are handled by Lombok
 
 }

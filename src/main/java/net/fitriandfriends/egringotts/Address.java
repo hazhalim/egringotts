@@ -1,9 +1,15 @@
 package net.fitriandfriends.egringotts;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table
+@Data
+@Getter
+@Setter
 public class Address {
 
     // Instance variables
@@ -61,90 +67,8 @@ public class Address {
         this.country = country;
 
     }
-    // Accessor and mutator methods
-    public String getType() {
 
-        return this.type;
-
-    }
-
-    public void setType(String type) {
-
-        this.type = type;
-
-    }
-
-    public String getStreetName1() {
-
-        return this.streetName1;
-
-    }
-
-    public void setStreetName1(String streetName1) {
-
-        this.streetName1 = streetName1;
-
-    }
-
-    public String getStreetName2() {
-
-        return this.streetName2;
-
-    }
-
-    public void setStreetName2(String streetName2) {
-
-        this.streetName2 = streetName2;
-
-    }
-
-    public String getTown() {
-
-        return this.town;
-
-    }
-
-    public void setTown(String town) {
-
-        this.town = town;
-
-    }
-
-    public String getState() {
-
-        return state;
-
-    }
-
-    public void setState(String state) {
-
-        this.state = state;
-
-    }
-
-    public String getPostcode() {
-
-        return this.postcode;
-
-    }
-
-    public void setPostcode(String postcode) {
-
-        this.postcode = postcode;
-
-    }
-
-    public String getCountry() {
-
-        return this.country;
-
-    }
-
-    public void setCountry(String country) {
-
-        this.country = country;
-
-    }
+    // Accessor and mutator methods are handled by Lombok
 
     // Other methods
     @Override

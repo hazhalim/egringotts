@@ -1,6 +1,8 @@
 package net.fitriandfriends.egringotts;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,26 +14,21 @@ public class UserService<T extends User> {
     @Autowired
     private UserRepository<T> userRepository;
 
-    // Constructor
-    public UserService(UserRepository<T> userRepository) {
-
-        this.userRepository = userRepository;
-
-    }
-
     // Accessor and mutator methods
+    @CacheEvict(value = "users", allEntries = true)
     public T createUser(T user) {
 
         return userRepository.save(user);
 
     }
 
+    @Cacheable("users")
     public List<T> getAllUsers() {
 
         return userRepository.findAll();
 
     }
 
-    // Other methods
+    // Other service methods
 
 }

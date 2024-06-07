@@ -3,6 +3,8 @@ package net.fitriandfriends.egringotts;
 import freemarker.template.TemplateException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,30 +23,15 @@ public class TransactionService {
     private BalanceRepository balanceRepository;
 
     // Create a transaction instance on the database
+    @CacheEvict(value = {"transactionHistoru", "transactionsByAccountId"}, allEntries = true)
     public Transaction createTransaction(Transaction transaction) {
 
         return transactionRepository.save(transaction);
 
     }
 
-    // Get all transactions of an account (by Account object)
-    public List<Transaction> getTransactionHistory(Account account) {
-
-        // From DB, get the transactions of an account
-        List<Transaction> transactions = transactionRepository.findByFromAccount(account);
-
-        // Initialise a PensievePast instance
-        PensievePast pensievePast = new PensievePast();
-
-        // Push each transaction in the list to the stack (the least recent transaction is at the bottom)
-        pensievePast.pushTransactionsToStack(transactions);
-
-        // Return the new list of transactions by getting the pensieve past (the most recent transaction is at the top)
-        return pensievePast.getPensievePast();
-
-    }
-
     // Get the transaction of an account by account ID
+    @Cacheable("transactionHistory")
     public List<Transaction> getTransactionHistory(Long accountId) {
 
         // From DB, get the transactions of an account
@@ -61,29 +48,48 @@ public class TransactionService {
 
     }
 
+//    // Get all transactions of an account (by Account object)
+//    @Cacheable("transactionHistory")
+//    public List<Transaction> getTransactionHistory(Account account) {
+//
+//        // From DB, get the transactions of an account
+//        List<Transaction> transactions = transactionRepository.findByFromAccount(account);
+//
+//        // Initialise a PensievePast instance
+//        PensievePast pensievePast = new PensievePast();
+//
+//        // Push each transaction in the list to the stack (the least recent transaction is at the bottom)
+//        pensievePast.pushTransactionsToStack(transactions);
+//
+//        // Return the new list of transactions by getting the pensieve past (the most recent transaction is at the top)
+//        return pensievePast.getPensievePast();
+//
+//    }
+
     // Get all transactions of an account with specific filters (by account ID, through the repository)
+    @Cacheable("transactionsByAccountId")
     public List<Transaction> getFilteredTransactions(Long accountId, String category, Date startDate, Date endDate, Double amountThreshold) {
 
         return transactionRepository.findFilteredTransactions(accountId, category, startDate, endDate, amountThreshold);
 
     }
 
-    // Get filtered transactions from the list of transactions (by list of transactions, in memory)
-    public List<Transaction> filterTransactions(List<Transaction> transactions, String category, Date startDate, Date endDate, Double amountThreshold) {
-
-        Predicate<Transaction> categoryPredicate = transaction -> category == null || transaction.getCategory().equals(category);
-        Predicate<Transaction> startDatePredicate = transaction -> startDate == null || transaction.getDate().after(startDate);
-        Predicate<Transaction> endDatePredicate = transaction -> endDate == null || transaction.getDate().before(endDate);
-        Predicate<Transaction> amountPredicate = transaction -> amountThreshold == null || transaction.getAmount() >= amountThreshold;
-
-        return transactions.stream()
-                .filter(categoryPredicate)
-                .filter(startDatePredicate)
-                .filter(endDatePredicate)
-                .filter(amountPredicate)
-                .collect(Collectors.toList());
-
-    }
+//    // Get filtered transactions from the list of transactions (by list of transactions, in memory)
+//    public List<Transaction> filterTransactions(List<Transaction> transactions, String category, Date startDate, Date endDate, Double amountThreshold) {
+//
+//        Predicate<Transaction> categoryPredicate = transaction -> category == null || transaction.getCategory().equals(category);
+//        Predicate<Transaction> startDatePredicate = transaction -> startDate == null || transaction.getDate().after(startDate);
+//        Predicate<Transaction> endDatePredicate = transaction -> endDate == null || transaction.getDate().before(endDate);
+//        Predicate<Transaction> amountPredicate = transaction -> amountThreshold == null || transaction.getAmount() >= amountThreshold;
+//
+//        return transactions.stream()
+//                .filter(categoryPredicate)
+//                .filter(startDatePredicate)
+//                .filter(endDatePredicate)
+//                .filter(amountPredicate)
+//                .collect(Collectors.toList());
+//
+//    }
 
     // Other service methods
     @Transactional

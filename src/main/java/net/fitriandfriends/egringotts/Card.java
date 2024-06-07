@@ -1,11 +1,19 @@
 package net.fitriandfriends.egringotts;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Entity
 @Table
+@Data
+@Getter
+@Setter
+@ToString
 public class Card {
 
     // Instance variables
@@ -43,66 +51,6 @@ public class Card {
 
     }
 
-    public Long getCardID() {
-        return cardID;
-    }
-
-    public void setCardID(Long cardID) {
-        this.cardID = cardID;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getCvv() {
-        return cvv;
-    }
-
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
-    }
-
-    public Date getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
-    }
-
-    @Override
-    public String toString() {
-
-        return "Card{" +
-                "cardID=" + cardID +
-                ", account=" + account +
-                ", type='" + type + '\'' +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", cvv='" + cvv + '\'' +
-                ", expiryDate=" + expiryDate +
-                '}';
-
-    }
+    // Accessor, mutator, and toString methods are handled by Lombok
 
 }

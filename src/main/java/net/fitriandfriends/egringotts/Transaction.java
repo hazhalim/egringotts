@@ -1,13 +1,22 @@
 package net.fitriandfriends.egringotts;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
+@Setter
+@Getter
+@ToString
 @Entity
 @Table
+@Data
 public class Transaction {
 
+    // Accessor and mutator methods
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,113 +75,6 @@ public class Transaction {
 
     }
 
-    // Accessor and mutator methods
-    public Long getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(Long transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public Account getFromAccount() {
-        return fromAccount;
-    }
-
-    public void setFromAccount(Account fromAccount) {
-        this.fromAccount = fromAccount;
-    }
-
-    public Account getToAccount() {
-        return toAccount;
-    }
-
-    public void setToAccount(Account toAccount) {
-        this.toAccount = toAccount;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public Card getCard() {
-        return card;
-    }
-
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public Double getFromAccountBalance() {
-        return fromAccountBalance;
-    }
-
-    public void setFromAccountBalance(Double fromAccountBalance) {
-        this.fromAccountBalance = fromAccountBalance;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getReceiptFileName() {
-        return receiptFileName;
-    }
-
-    public void setReceiptFileName(String receiptFilePath) {
-        this.receiptFileName = receiptFilePath;
-    }
-
-    // Other methods
-    @Override
-    public String toString() {
-
-        return "Transaction{" +
-                "transactionId=" + transactionId +
-                ", fromAccount=" + fromAccount +
-                ", toAccount=" + toAccount +
-                ", paymentMethod='" + paymentMethod + '\'' +
-                ", card=" + card +
-                ", amount=" + amount +
-                ", currency='" + currency + '\'' +
-                ", fromAccountBalance=" + fromAccountBalance +
-                ", date=" + date +
-                ", category='" + category + '\'' +
-                ", receiptFilePath='" + receiptFileName + '\'' +
-                '}';
-
-    }
+    // Accessor, mutator, and toString methods are handled by Lombok
 
 }

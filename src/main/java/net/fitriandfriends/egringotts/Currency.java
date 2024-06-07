@@ -12,26 +12,28 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserImage {
+public class Currency {
 
     // Instance variables
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_image_id")
-    private Long userImageID;
+    @Column(name = "currency_id")
+    private Long currencyID;
 
-    @Column(name = "image_path")
-    private String imagePath;
+    @Column(name = "name")
+    private String name;
 
     // Constructors
-    public UserImage() {}
+    public Currency() {}
 
-    public UserImage(String imagePath) {
+    public Currency(String name) {
 
-        this.imagePath = imagePath;
+        this.name = name;
 
     }
 
     // Accessor, mutator, and toString methods are handled by Lombok
+
+    // Other methods
 
 }
