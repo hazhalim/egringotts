@@ -73,6 +73,27 @@ public class Account {
     // Constructors
     public Account() {}
 
+    // Dummy account constructors for search function
+    public Account(String fullName, boolean isFullName) {
+
+        this.fullName = fullName;
+
+    }
+
+    public Account(String telephoneNumber) {
+
+        this.telephoneNumber = telephoneNumber;
+
+    }
+
+    public Account(String fullName, String telephoneNumber) {
+
+        this.fullName = fullName;
+        this.telephoneNumber = telephoneNumber;
+
+    }
+
+    // Actual constructor
     public Account(User user, String fullName, String gender, Date dateOfBirth, Address addressID, UserImage userImage, String emailAddress, String username, String password, String telephoneNumber, SecurityQuestion securityQuestion, int securityPIN) {
 
         this.user = user;
