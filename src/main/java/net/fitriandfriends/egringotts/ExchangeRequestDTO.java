@@ -2,18 +2,17 @@ package net.fitriandfriends.egringotts;
 
 import lombok.Data;
 
-// Data Transfer Object (DTO) for processing exchange requests
+// Data Transfer Object (DTO) for exchange requests
 @Data
-public class ProcessExchangeRequest {
+public class ExchangeRequestDTO {
 
-    private Long accountID;
+    // Instance
     private Long fromCurrencyID;
     private Long toCurrencyID;
     private double initialAmount;
 
-    public ProcessExchangeRequest(Long accountID, Long fromCurrencyID, Long toCurrencyID, double initialAmount) {
+    public ExchangeRequestDTO(Long fromCurrencyID, Long toCurrencyID, double initialAmount) {
 
-        this.accountID = accountID;
         this.fromCurrencyID = fromCurrencyID;
         this.toCurrencyID = toCurrencyID;
         this.initialAmount = initialAmount;

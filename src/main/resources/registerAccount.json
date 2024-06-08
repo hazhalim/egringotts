@@ -1,0 +1,22 @@
+{
+
+  "role": "Goblin",
+  "fullName": "E-Gringotts Bank",
+  "gender": "Male",
+  "dateOfBirth": "2024-06-01",
+  "streetName1": "North Side",
+  "streetName2": "Diagon Alley",
+  "town": "London",
+  "state": "England",
+  "postcode": "E1",
+  "country": "United Kingdom",
+  "userImageURL": "/src/main/resources/userImages/",
+  "emailAddress": "22002548@siswa.um.edu.my",
+  "username": "egringotts",
+  "password": "fitriandfriends",
+  "telephoneNumber": "+60127273192",
+  "securityQuestionID": 1,
+  "securityAnswer": "Harry Potter",
+  "securityPIN": 2024
+
+}

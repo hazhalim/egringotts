@@ -1,9 +1,11 @@
 package net.fitriandfriends.egringotts;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
 
@@ -20,19 +22,22 @@ public class Account {
     @Column(name = "account_id")
     private Long accountID;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "creation_date")
     private Date creationDate;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "closing_date")
     private Date closingDate;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "last_login_date")
     private Date lastLoginDate;
 
@@ -44,14 +49,15 @@ public class Account {
     private String gender;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")
-    private Address addressID;
+    private Address address;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_image_id", referencedColumnName = "user_image_id")
     private UserImage userImage;
 
@@ -68,12 +74,12 @@ public class Account {
     @Column(name = "telephone_number")
     private String telephoneNumber;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "security_question_id", referencedColumnName = "security_question_id")
     private SecurityQuestion securityQuestion;
 
     @Column(name = "security_pin")
-    private int securityPIN;
+    private String securityPIN;
 
     // Constructors
     public Account() {}
@@ -99,13 +105,13 @@ public class Account {
     }
 
     // Actual constructor
-    public Account(User user, String fullName, String gender, Date dateOfBirth, Address addressID, UserImage userImage, String emailAddress, String username, String password, String telephoneNumber, SecurityQuestion securityQuestion, int securityPIN) {
+    public Account(User user, String fullName, String gender, Date dateOfBirth, Address address, UserImage userImage, String emailAddress, String username, String password, String telephoneNumber, SecurityQuestion securityQuestion, String securityPIN) {
 
         this.user = user;
         this.fullName = fullName;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
-        this.addressID = addressID;
+        this.address = address;
         this.userImage = userImage;
         this.emailAddress = emailAddress;
         this.username = username;
@@ -119,5 +125,20 @@ public class Account {
     // Accessor, mutator, and toString methods are handled by Lombok
 
     // Other methods
+    // Lifecycle callbacks
+    @PrePersist
+    protected void onCreate() {
+
+        creationDate = new Date();
+        lastLoginDate = new Date();
+
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+
+        lastLoginDate = new Date();
+
+    }
 
 }

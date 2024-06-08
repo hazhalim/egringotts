@@ -26,29 +26,29 @@ public class Transaction {
     @Column(name = "type")
     private String type;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "from_account_id", referencedColumnName = "account_id")
     private Account fromAccount;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "to_account_id", referencedColumnName = "account_id")
     private Account toAccount;
 
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "card_id", referencedColumnName = "card_id")
     private Card card;
 
     @Column(name = "amount")
     private Double amount;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
     private Currency currency;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "from_account_balance_id", referencedColumnName = "balance_id")
     private Balance fromAccountBalance;
 

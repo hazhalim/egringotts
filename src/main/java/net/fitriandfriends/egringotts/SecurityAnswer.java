@@ -20,11 +20,11 @@ public class SecurityAnswer {
     @Column(name = "security_answer_id")
     private Long securityAnswerID;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "security_question_id", referencedColumnName = "security_question_Id")
     private SecurityQuestion securityQuestion;
 

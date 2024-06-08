@@ -21,14 +21,14 @@ public class CurrencyExchangeController {
     private CurrencyRepository currencyRepository;
 
     @PostMapping("/convert")
-    public ResponseEntity<ExchangeResult> exchangeCurrency(@RequestBody ExchangeRequest exchangeRequest) {
+    public ResponseEntity<ExchangeResult> exchangeCurrency(@RequestBody ExchangeRequestDTO exchangeRequestDTO) {
 
         try {
 
-            Currency fromCurrency = currencyRepository.findByCurrencyID(exchangeRequest.getFromCurrencyID());
-            Currency toCurrency = currencyRepository.findByCurrencyID(exchangeRequest.getToCurrencyID());
+            Currency fromCurrency = currencyRepository.findByCurrencyID(exchangeRequestDTO.getFromCurrencyID());
+            Currency toCurrency = currencyRepository.findByCurrencyID(exchangeRequestDTO.getToCurrencyID());
 
-            double amount = exchangeRequest.getInitialAmount();
+            double amount = exchangeRequestDTO.getInitialAmount();
 
             ExchangeResult result = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
 
@@ -43,7 +43,7 @@ public class CurrencyExchangeController {
     }
 
     @PostMapping("/process")
-    public ResponseEntity<String> processExchange(@RequestBody ProcessExchangeRequest exchangeRequest) {
+    public ResponseEntity<String> processExchange(@RequestBody ProcessExchangeRequestDTO exchangeRequest) {
 
         try {
 

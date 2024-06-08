@@ -14,15 +14,6 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/register")
-    public ResponseEntity<Account> registerAccount(@RequestBody Account account) {
-
-        Account createdAccount = accountService.createAccount(account);
-
-        return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
-
-    }
-
     @PostMapping("/search")
     public ResponseEntity<List<Account>> searchMatchingAccounts(@RequestParam(required = false) String fullName, @RequestParam(required = false) String telephoneNumber) {
 

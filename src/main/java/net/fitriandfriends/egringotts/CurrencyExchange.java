@@ -20,11 +20,11 @@ public class CurrencyExchange implements Comparable<CurrencyExchange> {
     @Column(name = "currency_exchange_rate_id")
     private Long currencyExchangeRateID;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "from_currency_id", referencedColumnName = "currency_id")
     private Currency fromCurrency;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "to_currency_id", referencedColumnName = "currency_id")
     private Currency toCurrency;
 

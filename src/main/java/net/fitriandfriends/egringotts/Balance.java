@@ -20,11 +20,11 @@ public class Balance {
     @Column(name = "balance_id")
     private Long balanceID;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
     private Currency currency;
 

@@ -9,15 +9,15 @@ import java.security.Principal;
 public class HomeController {
 
 
-    @GetMapping("/signin")
+    @GetMapping("/login")
     public String home(Principal principal) {
 
         return "Welcome to E-Gringotts, " + principal.getName() + "!";
 
     }
 
-    @GetMapping("/secured")
-    public String secured() {
+    @GetMapping("/dashboard")
+    public String dashboard() {
 
         return "This is the secured version of E-Gringotts!";
 

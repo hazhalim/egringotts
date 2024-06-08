@@ -1,6 +1,5 @@
 package net.fitriandfriends.egringotts;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,10 +14,49 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private SecurityQuestionRepository securityQuestionRepository;
+    @Autowired
+    private BalanceService balanceService;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private UserImageRepository userImageRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @CacheEvict(value = {"accountsSortedAscending", "accountsSortedDescending", "accountsByFullName", "accountsByTelephoneNumber"}, allEntries = true)
-    public Account createAccount(Account account) {
+    public Account createAccount(AccountDTO accountDTO) {
 
+        // Create a new user (role) and initialise it based on the string provided in accountDTO
+        User newUser = switch (accountDTO.getRole()) {
+
+            case "Platinum Patronus" -> new PlatinumPatronus();
+            case "Golden Galleon" -> new GoldenGalleon();
+            case "Silver Snitch" -> new SilverSnitch();
+            case "Goblin" -> new Goblin();
+            default -> new SilverSnitch();
+
+        };
+
+        userRepository.save(newUser); // Save the new user to the database
+
+        // Create a new Address object based on details provided in accountDTO
+        Address newAddress = new Address(accountDTO.getStreetName1(), accountDTO.getStreetName2(), accountDTO.getTown(), accountDTO.getState(), accountDTO.getPostcode(), accountDTO.getCountry());
+        addressRepository.save(newAddress); // Save the new address to the database
+
+        // Create a new UserImage object based on details provided in accountDTO
+        UserImage userImage = new UserImage(accountDTO.getUserImageURL());
+        userImageRepository.save(userImage); // Save the new user image to the database
+
+        // Attach the SecurityQuestion to the account based on the securityQuestionID provided in accountDTO
+        SecurityQuestion securityQuestion = securityQuestionRepository.findBySecurityQuestionID(accountDTO.getSecurityQuestionID());
+        securityQuestionRepository.save(securityQuestion); // Save the new security question to the database
+
+        // Create a new Account object based on details provided in accountDTO and the new objects created above
+        Account account = new Account(newUser, accountDTO.getFullName(), accountDTO.getGender(), accountDTO.getDateOfBirth(), newAddress, userImage, accountDTO.getEmailAddress(), accountDTO.getUsername(), accountDTO.getPassword(), accountDTO.getTelephoneNumber(), securityQuestion, accountDTO.getSecurityPIN());
+
+        // Save the new account to the database
         return accountRepository.save(account);
 
     }

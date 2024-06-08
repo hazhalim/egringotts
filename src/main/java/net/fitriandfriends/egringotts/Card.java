@@ -22,7 +22,7 @@ public class Card {
     @Column(name = "card_id")
     private Long cardID;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "account_id", referencedColumnName = "account_id")
     private Account account;
 
