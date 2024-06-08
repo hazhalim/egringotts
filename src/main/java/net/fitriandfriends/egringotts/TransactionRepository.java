@@ -26,7 +26,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query("SELECT t FROM Transaction t WHERE (t.fromAccount.accountID = :accountId OR t.toAccount.accountID = :accountId) AND (:category IS NULL OR t.category = :category) AND (:startDate IS NULL OR t.date >= :startDate) AND (:endDate IS NULL OR t.date <= :endDate) AND (:amountThreshold IS NULL OR t.amount >= :amountThreshold)")
     List<Transaction> findFilteredTransactions(
 
-            @Param("accountId") Long accountId,
+            @Param("accountID") Long accountId,
             @Param("category") String category,
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate,

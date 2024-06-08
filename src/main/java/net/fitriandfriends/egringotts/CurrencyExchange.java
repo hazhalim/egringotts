@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CurrencyExchange {
+public class CurrencyExchange implements Comparable<CurrencyExchange> {
 
     // Instance variables
     @Id
@@ -31,14 +31,26 @@ public class CurrencyExchange {
     @Column(name = "rate")
     private Double rate;
 
+    // Always in the currency listed in fromCurrency
+    @Column(name = "processing_fee")
+    private Double processingFee;
+
     // Constructors
     public CurrencyExchange() {}
 
-    public CurrencyExchange(Currency fromCurrency, Currency toCurrency, Double rate) {
+    public CurrencyExchange(Currency fromCurrency, Currency toCurrency, Double rate, Double processingFee) {
 
         this.fromCurrency = fromCurrency;
         this.toCurrency = toCurrency;
         this.rate = rate;
+        this.processingFee = processingFee;
+
+    }
+
+    @Override
+    public int compareTo(CurrencyExchange otherCurrencyExchange) {
+
+        return currencyExchangeRateID.compareTo(otherCurrencyExchange.currencyExchangeRateID);
 
     }
 

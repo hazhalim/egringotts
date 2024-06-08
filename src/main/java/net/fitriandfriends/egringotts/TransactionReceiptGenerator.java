@@ -3,6 +3,7 @@ package net.fitriandfriends.egringotts;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.Version;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -26,6 +27,7 @@ public class TransactionReceiptGenerator {
         Map<String, Object> dataModel = new HashMap<>();
 
         dataModel.put("transactionID", transaction.getTransactionId());
+        dataModel.put("type", transaction.getType());
         dataModel.put("date", transaction.getDate());
 
         Account fromAccount = transaction.getFromAccount();
@@ -49,9 +51,11 @@ public class TransactionReceiptGenerator {
 
         }
 
+        dataModel.put("description", transaction.getDescription());
+
         // Create the FreeMarker configuration
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_33);
-        cfg.setClassForTemplateLoading(TransactionReceiptGenerator.class, "/");
+        Configuration cfg = new Configuration(new Version(2, 3, 33));
+        cfg.setClassForTemplateLoading(TransactionReceiptGenerator.class, "../../../resources");
 
         // Load FreeMarker template
         Template template = cfg.getTemplate("transaction_receipt.ftl");

@@ -23,6 +23,9 @@ public class Transaction {
     @Column(name = "transaction_id")
     private Long transactionId;
 
+    @Column(name = "type")
+    private String type;
+
     @ManyToOne
     @JoinColumn(name = "from_account_id", referencedColumnName = "account_id")
     private Account fromAccount;
@@ -45,8 +48,9 @@ public class Transaction {
     @JoinColumn(name = "currency_id", referencedColumnName = "currency_id")
     private Currency currency;
 
-    @Column(name = "from_account_balance")
-    private Double fromAccountBalance;
+    @ManyToOne
+    @JoinColumn(name = "from_account_balance_id", referencedColumnName = "balance_id")
+    private Balance fromAccountBalance;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
@@ -55,14 +59,18 @@ public class Transaction {
     @Column(name = "category")
     private String category;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "receipt_file_path")
     private String receiptFileName;
 
     // Constructors
     public Transaction() {}
 
-    public Transaction(Account fromAccount, Account toAccount, String paymentMethod, Card card, Double amount, Currency currency, Double fromAccountBalance, Date date, String category, String receiptFileName) {
+    public Transaction(String type, Account fromAccount, Account toAccount, String paymentMethod, Card card, Double amount, Currency currency, Balance fromAccountBalance, Date date, String category, String description, String receiptFileName) {
 
+        this.type = type;
         this.fromAccount = fromAccount;
         this.toAccount = toAccount;
         this.paymentMethod = paymentMethod;
@@ -72,6 +80,7 @@ public class Transaction {
         this.fromAccountBalance = fromAccountBalance;
         this.date = date;
         this.category = category;
+        this.description = description;
         this.receiptFileName = receiptFileName;
 
     }

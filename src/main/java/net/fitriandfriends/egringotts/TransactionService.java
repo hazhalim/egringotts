@@ -93,7 +93,7 @@ public class TransactionService {
 
     // Other service methods
     @Transactional
-    public Transaction performTransaction(Account fromAccount, Account toAccount, String paymentMethod, Card card, Double amount, String currency, String category) throws TemplateException, IOException, InsufficientBalanceException {
+    public Transaction performTransaction(String type, Account fromAccount, Account toAccount, String paymentMethod, Card card, Double amount, Currency currency, String category, String description) throws TemplateException, IOException, InsufficientBalanceException {
 
         // Get the balances, ensure that the fromAccount has enough balance
         Balance fromAccountBalance = balanceRepository.findByAccountAndCurrency(fromAccount, currency);
@@ -119,7 +119,7 @@ public class TransactionService {
         }
 
         // Create a transaction and save it in the database
-        Transaction transaction = new Transaction(fromAccount, toAccount, paymentMethod, card, amount, currency, fromAccountBalance.getBalance(), new Date(), category, null);
+        Transaction transaction = new Transaction(type, fromAccount, toAccount, paymentMethod, card, amount, currency, fromAccountBalance, new Date(), category, description, null);
 
         String receiptFileName = TransactionReceiptGenerator.generateTransactionReceipt(transaction);
 

@@ -403,35 +403,35 @@ public class WeightedGraph<T extends Comparable<T>, N extends Comparable<N>> {
    }
 
    // Implementation of Dijkstra's algorithm to find the shortest path between two vertices (currencies)
-   public Map<T, N> shortestPath(T startVertex) {
+   public Map<T, Double> shortestPath(T startVertex) {
 
-      Map<T, N> distances = new HashMap<>();
-      PriorityQueue<VertexDistancePair<T, N>> pq = new PriorityQueue<>();
+      Map<T, Double> distances = new HashMap<>();
+
+      PriorityQueue<VertexDistancePair<T, Double>> pq = new PriorityQueue<>(Comparator.comparing(VertexDistancePair::getDistance));
 
       for (Vertex<T, N> vertex : getAllVertices()) {
 
-         // Null here represents a distance of infinity
-         distances.put(vertex.vertexInformation, null);
+         distances.put(vertex.vertexInformation, Double.MAX_VALUE);
 
       }
 
-      distances.put(startVertex, (N) (Double) 0.0);
+      distances.put(startVertex, 0.0);
 
-      pq.add(new VertexDistancePair<>(startVertex, (N) (Double) 0.0));
+      pq.add(new VertexDistancePair<>(startVertex, 0.0));
 
       while (!pq.isEmpty()) {
 
-         VertexDistancePair<T, N> current = pq.poll();
-
+         VertexDistancePair<T, Double> current = pq.poll();
          T currentVertex = current.getVertex();
-         N currentDistance = current.getDistance();
+         Double currentDistance = current.getDistance();
 
          for (T neighbor : getNeighbours(currentVertex)) {
 
             N edgeWeight = getEdgeWeight(currentVertex, neighbor);
-            N newDist = (N) (Double) ((Double) currentDistance + (Double) edgeWeight);
+            Double rate = ((CurrencyExchange) edgeWeight).getRate();
+            Double newDist = currentDistance + rate;
 
-            if (distances.get(neighbor) == null || (Double) newDist < (Double) distances.get(neighbor)) {
+            if (newDist < distances.get(neighbor)) {
 
                distances.put(neighbor, newDist);
                pq.add(new VertexDistancePair<>(neighbor, newDist));
@@ -443,6 +443,52 @@ public class WeightedGraph<T extends Comparable<T>, N extends Comparable<N>> {
       }
 
       return distances;
+
+   }
+
+   public Map<T, CurrencyExchange> shortestPathWithExchanges(T startVertex) {
+
+      Map<T, Double> distances = new HashMap<>();
+      Map<T, CurrencyExchange> previousExchanges = new HashMap<>();
+
+      PriorityQueue<VertexDistancePair<T, Double>> pq = new PriorityQueue<>(Comparator.comparing(VertexDistancePair::getDistance));
+
+      for (Vertex<T, N> vertex : getAllVertices()) {
+
+         distances.put(vertex.vertexInformation, Double.MAX_VALUE);
+
+      }
+
+      distances.put(startVertex, 0.0);
+      pq.add(new VertexDistancePair<>(startVertex, 0.0));
+
+      while (!pq.isEmpty()) {
+
+         VertexDistancePair<T, Double> current = pq.poll();
+
+         T currentVertex = current.getVertex();
+
+         Double currentDistance = current.getDistance();
+
+         for (T neighbor : getNeighbours(currentVertex)) {
+
+            N edgeWeight = getEdgeWeight(currentVertex, neighbor);
+            Double rate = ((CurrencyExchange) edgeWeight).getRate();
+            Double newDist = currentDistance + rate;
+
+            if (newDist < distances.get(neighbor)) {
+
+               distances.put(neighbor, newDist);
+               previousExchanges.put(neighbor, (CurrencyExchange) edgeWeight);
+               pq.add(new VertexDistancePair<>(neighbor, newDist));
+
+            }
+
+         }
+
+      }
+
+      return previousExchanges;
 
    }
 
