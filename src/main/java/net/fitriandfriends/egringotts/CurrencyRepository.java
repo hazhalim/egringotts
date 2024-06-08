@@ -14,11 +14,8 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long> {
     // Find a currency by its name
     public Currency findByName(String name);
 
-    // Find a currency by its code
+    // Find a currency by its abbreviation
     public Currency findByAbbreviation(String abbreviation);
-
-    // Find a currency by its symbol
-    public Currency findBy(String currencySymbol);
 
     // Find all currencies
     public List<Currency> findAll();
