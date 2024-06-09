@@ -3,6 +3,8 @@ package net.fitriandfriends.egringotts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -37,23 +39,17 @@ public class CardService {
 
     }
 
-    public String addCard(CardDTO cardDTO) {
-
-        private Long accountID;
-        private String type;
-        private String cardNumber;
-        private String cvv;
-        private String expiryDate;
+    public String addCard(CardDTO cardDTO) throws ParseException {
 
         Card card = new Card();
-        card.setAccount(accountRepository.findByAccountId(cardDTO.getAccountID());
-
-        card.setCardType(cardDTO.getCardType());
+        card.setType(cardDTO.getType());
+        card.setAccount(accountRepository.findByAccountID(cardDTO.getAccountID()));
         card.setCardNumber(cardDTO.getCardNumber());
-        card.setCardHolderName(cardDTO.getCardHolderName());
-        card.setExpiryDate(cardDTO.getExpiryDate());
         card.setCvv(cardDTO.getCvv());
-        card.setCardStatus(cardDTO.getCardStatus());
+
+        String expiryDate = cardDTO.getExpiryDate();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-yyyy");
+        card.setExpiryDate(dateFormat.parse(expiryDate));
 
         cardRepository.save(card);
 

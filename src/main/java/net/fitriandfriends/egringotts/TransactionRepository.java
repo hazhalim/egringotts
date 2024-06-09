@@ -36,4 +36,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     );
 
+    @Query("SELECT SUM(t.amount) FROM Transaction t WHERE t.currency.currencyID = :currencyId")
+    Double sumAmountByCurrency_CurrencyID(@Param("currencyId") Long currencyId);
+
 }

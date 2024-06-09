@@ -85,6 +85,20 @@ public class TransactionController {
 
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getTransactionCount() {
+
+        return new ResponseEntity<>(transactionService.getTransactionCount(), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/sum/{currencyId}")
+    public ResponseEntity<Double> getTransactionSumByCurrency(@PathVariable Long currencyId) {
+
+        return new ResponseEntity<>(transactionService.getTransactionSumByCurrency(currencyId), HttpStatus.OK);
+
+    }
+
     // Other endpoints
 
 }

@@ -76,4 +76,11 @@ public class AccountController {
 
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getCount() {
+
+        return ResponseEntity.ok(accountService.getAccountCount());
+
+    }
+
 }

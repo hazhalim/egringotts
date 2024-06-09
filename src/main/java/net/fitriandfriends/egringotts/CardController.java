@@ -1,10 +1,13 @@
 package net.fitriandfriends.egringotts;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/cards")
@@ -14,9 +17,9 @@ public class CardController {
     private CardService cardService;
 
     @PostMapping("/add")
-    public void addCard(@RequestBody CardDTO cardDTO) {
+    public ResponseEntity<String> addCard(@RequestBody CardDTO cardDTO) throws ParseException {
 
-        cardService.addCard(cardDTO);
+        return ResponseEntity.ok(cardService.addCard(cardDTO));
 
     }
 

@@ -330,6 +330,12 @@ public class AccountService {
 
     }
 
+    public Long getAccountCount() {
+
+        return (long) accountRepository.findAll().size();
+
+    }
+
 //    public List<Account> searchAccount(String fullName, String telephoneNumber) {
 //
 //        List<Account> sortedAccounts = getAllAccountsSortedAscending("fullName");

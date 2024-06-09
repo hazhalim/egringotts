@@ -170,4 +170,16 @@ public class TransactionService {
 
     }
 
+    public Long getTransactionCount() {
+
+        return (long) transactionRepository.findAll().size();
+
+    }
+
+    public Double getTransactionSumByCurrency(Long currencyId) {
+
+        return transactionRepository.sumAmountByCurrency_CurrencyID(currencyId);
+
+    }
+
 }
