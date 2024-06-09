@@ -46,6 +46,21 @@ public class AccountController {
 
     }
 
+    @GetMapping("/{accountId}/username")
+    public ResponseEntity<String> getUsername(@PathVariable Long accountId) {
+
+        if (accountId != null) {
+
+            return ResponseEntity.ok(accountService.getUsername(accountId));
+
+        } else {
+
+            throw new IllegalArgumentException("Account ID cannot be null.");
+
+        }
+
+    }
+
     @GetMapping("/{accountId}/settings")
     public ResponseEntity<AccountDTO> getAccountSettings(@PathVariable Long accountId) {
 

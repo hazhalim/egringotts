@@ -336,6 +336,12 @@ public class AccountService {
 
     }
 
+    public String getUsername(Long accountId) {
+
+        return accountRepository.findByAccountID(accountId).getUsername();
+
+    }
+
 //    public List<Account> searchAccount(String fullName, String telephoneNumber) {
 //
 //        List<Account> sortedAccounts = getAllAccountsSortedAscending("fullName");
