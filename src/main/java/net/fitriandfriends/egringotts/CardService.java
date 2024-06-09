@@ -17,19 +17,19 @@ public class CardService {
 
     public Card getCardByCardId(Long cardId) {
 
-        return cardRepository.findByCardId(cardId);
+        return cardRepository.findByCardID(cardId);
 
     }
 
     public List<Card> getCardsByAccountId(Long accountId) {
 
-        return cardRepository.findByAccountId(accountId);
+        return cardRepository.findByAccount_AccountID(accountId);
 
     }
 
-    public List<Card> getCardsByAccountIdAndCardType(Long accountId, String cardType) {
+    public List<Card> getCardsByAccountIdAndCardType(Long accountId, String type) {
 
-        return cardRepository.findByAccountIdAndCardType(accountId, cardType);
+        return cardRepository.findByAccount_AccountIDAndType(accountId, type);
 
     }
 

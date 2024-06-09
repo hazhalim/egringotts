@@ -8,11 +8,11 @@ import java.util.List;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    public Card findByCardId(Long cardId);
+    public Card findByCardID(Long cardID);
 
-    public List<Card> findByAccountId(Long accountId);
+    public List<Card> findByAccount_AccountID(Long accountID);
 
-    public List<Card> findByAccountIdAndCardType(Long accountId, String cardType);
+    public List<Card> findByAccount_AccountIDAndType(Long accountId, String cardType);
 
     public List<Card> findAll();
 

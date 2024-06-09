@@ -36,7 +36,7 @@ public class TransactionService {
     @Cacheable("transaction")
     public Transaction getTransactionById(Long transactionId) {
 
-        return transactionRepository.findByTransactionID(transactionId);
+        return transactionRepository.findByTransactionId(transactionId);
 
     }
 
