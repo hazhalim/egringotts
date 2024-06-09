@@ -2,12 +2,9 @@ package net.fitriandfriends.egringotts;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import net.fitriandfriends.egringotts.CurrencyExchangeService.ExchangeResult;
+import net.fitriandfriends.egringotts.CurrencyExchangeService.*;
 
 @RestController
 @RequestMapping("/exchange")
@@ -20,8 +17,8 @@ public class CurrencyExchangeController {
     @Autowired
     private CurrencyRepository currencyRepository;
 
-    @PostMapping("/convert")
-    public ResponseEntity<ExchangeResult> exchangeCurrency(@RequestBody ExchangeRequestDTO exchangeRequestDTO) {
+    @GetMapping("/convert")
+    public ResponseEntity<ExchangeResultDTO> exchangeCurrency(@RequestBody ExchangeRequestDTO exchangeRequestDTO) {
 
         try {
 
@@ -32,7 +29,9 @@ public class CurrencyExchangeController {
 
             ExchangeResult result = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
 
-            return ResponseEntity.ok(result);
+            ExchangeResultDTO resultDTO = new CurrencyExchangeService.ExchangeResultDTO(result.getInitialAmount(), result.getExchangedAmount(), result.getTotalProcessingFee(), result.getProcessingFees());
+
+            return ResponseEntity.ok(resultDTO);
 
         } catch (IllegalArgumentException exception) {
 
@@ -43,16 +42,16 @@ public class CurrencyExchangeController {
     }
 
     @PostMapping("/process")
-    public ResponseEntity<String> processExchange(@RequestBody ProcessExchangeRequestDTO exchangeRequest) {
+    public ResponseEntity<String> processExchange(@RequestBody ProcessExchangeRequestDTO processExchangeRequestDTO) {
 
         try {
 
-            Account account = accountRepository.findByAccountID(exchangeRequest.getAccountID());
+            Account account = accountRepository.findByAccountID(processExchangeRequestDTO.getAccountID());
 
-            Currency fromCurrency = currencyRepository.findByCurrencyID(exchangeRequest.getFromCurrencyID());
-            Currency toCurrency = currencyRepository.findByCurrencyID(exchangeRequest.getToCurrencyID());
+            Currency fromCurrency = currencyRepository.findByCurrencyID(processExchangeRequestDTO.getFromCurrencyID());
+            Currency toCurrency = currencyRepository.findByCurrencyID(processExchangeRequestDTO.getToCurrencyID());
 
-            double initialAmount = exchangeRequest.getInitialAmount();
+            double initialAmount = processExchangeRequestDTO.getInitialAmount();
 
             ExchangeResult exchangeResult = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, initialAmount);
 

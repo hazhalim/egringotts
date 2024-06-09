@@ -2,12 +2,15 @@ package net.fitriandfriends.egringotts;
 
 import freemarker.template.TemplateException;
 import jakarta.transaction.Transactional;
+import org.apache.pdfbox.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -20,11 +23,20 @@ public class TransactionService {
     @Autowired
     private BalanceRepository balanceRepository;
 
-    // Create a transaction instance on the database
-    @CacheEvict(value = {"transactionHistoru", "transactionsByAccountId"}, allEntries = true)
-    public Transaction createTransaction(Transaction transaction) {
+    @Autowired
+    private AccountService accountService;
 
-        return transactionRepository.save(transaction);
+    @Autowired
+    private CurrencyService currencyService;
+
+    @Autowired
+    private CardService cardService;
+
+    // Get a transaction by its ID
+    @Cacheable("transaction")
+    public Transaction getTransactionById(Long transactionId) {
+
+        return transactionRepository.findByTransactionID(transactionId);
 
     }
 
@@ -74,7 +86,28 @@ public class TransactionService {
 
     // Other service methods
     @Transactional
-    public Transaction performTransaction(String type, Account fromAccount, Account toAccount, String paymentMethod, Card card, Double amount, Currency currency, String category, String description) throws TemplateException, IOException, InsufficientBalanceException {
+    @CacheEvict(value = {"transactionHistory", "transactionsByAccountId", "transaction"}, allEntries = true)
+    public Transaction performTransaction(TransactionTransfer transactionTransfer) throws TemplateException, IOException, InsufficientBalanceException {
+
+        Account fromAccount = accountService.getAccountByAccountId(transactionTransfer.getFromAccountId());
+        Account toAccount = accountService.getAccountByAccountId(transactionTransfer.getToAccountId());
+        Card card = cardService.getCardByCardId(transactionTransfer.getCardId());
+        Currency currency = currencyService.getCurrencyByCurrencyId(transactionTransfer.getCurrencyId());
+        Double amount = transactionTransfer.getAmount();
+
+        // Ensure that the fromAccount and toAccount are not the same
+        if (fromAccount.equals(toAccount)) {
+
+            throw new IllegalArgumentException("The fromAccount and toAccount cannot be the same.");
+
+        }
+
+        // Verify the security PIN of the fromAccount
+        if (!accountService.verifySecurityPIN(fromAccount.getAccountID(), transactionTransfer.getSecurityPIN())) {
+
+            throw new IllegalArgumentException("Invalid security PIN.");
+
+        }
 
         // Get the balances, ensure that the fromAccount has enough balance
         Balance fromAccountBalance = balanceRepository.findByAccountAndCurrency(fromAccount, currency);
@@ -100,13 +133,40 @@ public class TransactionService {
         }
 
         // Create a transaction and save it in the database
-        Transaction transaction = new Transaction(type, fromAccount, toAccount, paymentMethod, card, amount, currency, fromAccountBalance, new Date(), category, description, null);
+        Transaction transaction = new Transaction(transactionTransfer.getType(), fromAccount, toAccount, transactionTransfer.getPaymentMethod(), card, amount, currency, fromAccountBalance, new Date(), transactionTransfer.getCategory(), transactionTransfer.getDescription(), null);
 
         String receiptFileName = TransactionReceiptGenerator.generateTransactionReceipt(transaction);
 
         transaction.setReceiptFileName(receiptFileName);
 
         return transactionRepository.save(transaction);
+
+    }
+
+    public byte[] getPdfContentForTransaction(Long transactionId) {
+
+        // Retrieve the transaction with the given ID from the database
+        Transaction transaction = transactionRepository.findById(transactionId).orElse(null);
+
+        if (transaction != null) {
+
+            // Get the file path of the PDF stored in the transaction
+            String filePath = transaction.getReceiptFileName();
+
+            // Read the file and convert it to a byte array
+            try (InputStream inputStream = new FileInputStream(filePath)) {
+
+                return IOUtils.toByteArray(inputStream);
+
+            } catch (IOException exception) {
+
+                exception.printStackTrace();
+
+            }
+
+        }
+
+        return null;
 
     }
 

@@ -8,27 +8,33 @@ import java.security.Principal;
 @RestController
 public class HomeController {
 
+    @GetMapping("/")
+    public String home() {
 
-    @GetMapping("/login")
-    public String home(Principal principal) {
-
-        return "Welcome to E-Gringotts, " + principal.getName() + "!";
-
-    }
-
-    @GetMapping("/dashboard")
-    public String dashboard() {
-
-        return "This is the secured version of E-Gringotts!";
+        return "Welcome to E-Gringotts!";
 
     }
 
-    @GetMapping("/admin")
-    public String admin() {
+//    @GetMapping("/signin")
+//    public String signin() {
+//
+//        return "Please sign in";
+//
+//    }
 
-        return "This is the admin version of E-Gringotts!";
-
-    }
-
+//    @GetMapping("/dashboard")
+//    public String dashboard() {
+//
+//        return "This is the secured version of E-Gringotts!";
+//
+//    }
+//
+//    @GetMapping("/admin")
+//    public String admin() {
+//
+//        return "This is the admin version of E-Gringotts!";
+//
+//    }
+//
 
 }

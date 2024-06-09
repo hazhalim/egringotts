@@ -13,8 +13,12 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    private SecurityAnswerRepository securityAnswerRepository;
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public ResponseEntity<List<Account>> searchMatchingAccounts(@RequestParam(required = false) String fullName, @RequestParam(required = false) String telephoneNumber) {
 
         List<Account> matchingAccounts = accountService.searchMatchingAccounts(fullName, telephoneNumber);
@@ -42,25 +46,34 @@ public class AccountController {
 
     }
 
-//    @PostMapping("/search")
-//    public ResponseEntity<List<Account>> searchMatchingAccounts(@RequestBody String fullNameOrTelephoneNumber, @RequestParam(defaultValue = "true") boolean isFullName) {
-//
-//        List<Account> matchingAccounts;
-//
-//        if (isFullName) {
-//
-//            matchingAccounts = accountService.searchAccountByFullName(fullNameOrTelephoneNumber);
-//
-//        } else {
-//
-//            matchingAccounts = accountService.searchAccountByTelephoneNumber(fullNameOrTelephoneNumber);
-//
-//        }
-//
-//        return ResponseEntity.ok(matchingAccounts);
-//
-//    }
+    @GetMapping("/{accountId}/settings")
+    public ResponseEntity<AccountDTO> getAccountSettings(@PathVariable Long accountId) {
 
-    // Other endpoints
+        if (accountId != null) {
+
+            return ResponseEntity.ok(accountService.getAccountSettings(accountId));
+
+        } else {
+
+            throw new IllegalArgumentException("Account ID cannot be null.");
+
+        }
+
+    }
+
+    @PostMapping("/{accountId}/settings/update")
+    public ResponseEntity<String> updateAccount(@PathVariable Long accountId, @RequestBody AccountDTO accountDTO) {
+
+        if (accountId != null) {
+
+            return ResponseEntity.ok(accountService.updateAccountSettings(accountId, accountDTO));
+
+        } else {
+
+            throw new IllegalArgumentException("Account ID cannot be null.");
+
+        }
+
+    }
 
 }

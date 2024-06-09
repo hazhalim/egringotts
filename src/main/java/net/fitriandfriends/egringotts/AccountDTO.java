@@ -35,4 +35,27 @@ public class AccountDTO {
     private String securityAnswer;
     private String securityPIN;
 
+    public AccountDTO(String role, String fullName, String gender, Date dateOfBirth, String streetName1, String streetName2, String town, String state, String postcode, String country, String userImageURL, String emailAddress, String username, String password, String telephoneNumber, Long securityQuestionID, String securityAnswer, String securityPIN) {
+
+        this.role = role;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.streetName1 = streetName1;
+        this.streetName2 = streetName2;
+        this.town = town;
+        this.state = state;
+        this.postcode = postcode;
+        this.country = country;
+        this.userImageURL = userImageURL;
+        this.emailAddress = emailAddress;
+        this.username = username;
+        this.password = password;
+        this.telephoneNumber = telephoneNumber;
+        this.securityQuestionID = securityQuestionID;
+        this.securityAnswer = securityAnswer;
+        this.securityPIN = securityPIN;
+
+    }
+
 }

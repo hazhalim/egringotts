@@ -1,6 +1,7 @@
 package net.fitriandfriends.egringotts;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,7 @@ public class BalanceController {
     @Autowired
     private BalanceService balanceService;
 
-    @GetMapping("/account/{accountID}")
+    @GetMapping("/{accountID}")
     public ResponseEntity<List<Balance>> getBalancesByAccountId(@PathVariable Long accountID) {
 
         List<Balance> balances = balanceService.getBalancesByAccountId(accountID);
@@ -27,13 +28,13 @@ public class BalanceController {
 
         } else {
 
-            return ResponseEntity.ok(balances);
+            return new ResponseEntity<>(balances, HttpStatus.OK);
 
         }
 
     }
 
-    @GetMapping("/account/{accountID}/{currency}")
+    @GetMapping("/{accountID}/{currency}")
     public ResponseEntity<Balance> getBalanceByAccountId(@PathVariable Long accountID, @PathVariable Long currencyID) {
 
         Balance balance = balanceService.getBalanceByAccountIdAndCurrencyId(accountID, currencyID);

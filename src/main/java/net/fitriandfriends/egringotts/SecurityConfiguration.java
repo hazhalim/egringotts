@@ -3,9 +3,11 @@ package net.fitriandfriends.egringotts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
@@ -17,6 +19,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +31,9 @@ public class SecurityConfiguration {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
 
 
 //    @Bean
@@ -58,7 +68,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
 
-                    registry.requestMatchers("/", "/signin/**", "/signup/**", "/forgot/**", "/currencies/**").permitAll();
+                    registry.requestMatchers("/", "/signin/**", "/signup/**", "/forgot/**").permitAll();
                     registry.requestMatchers(
                             "/dashboard/**",
                             "/transactionshistory/**",
@@ -67,14 +77,23 @@ public class SecurityConfiguration {
                             "/settings/**",
                             "/transfer/**",
                             "/balance/**",
-                            "/Addcard/**").hasAnyRole("Platinum Patronus", "Golden Galleon", "Silver Snitch");
+                            "/Addcard/**").hasAnyAuthority("Platinum Patronus", "Golden Galleon", "Silver Snitch");
                     registry.requestMatchers(
-                            "/admin"
-                            ).hasRole("Goblin");
+                            "/admin",
+                            "/currencies/**"
+                            ).hasAuthority("Goblin");
                     registry.anyRequest().authenticated();
 
                 })
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                // After registry.requestMatchers (latest one)
+                .formLogin(httpSecurityFormLoginConfigurer -> {
+                    httpSecurityFormLoginConfigurer.loginPage("/signin")
+                            .successHandler(authenticationSuccessHandler)
+                            .permitAll();
+
+                })
+
+
                 .build();
 
     }
@@ -124,6 +143,28 @@ public class SecurityConfiguration {
 
     }
 
+    @Bean
+    public CorsFilter corsFilter() {
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
+        config.setAllowCredentials(true);
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsFilter(source);
+
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+
+        return authenticationConfiguration.getAuthenticationManager();
+
+    }
+
 }
 
 // .formLogin(formLogin -> formLogin
@@ -141,3 +182,9 @@ public class SecurityConfiguration {
 //                .oauth2Login(Customizer.withDefaults())
 //                .formLogin(Customizer.withDefaults())
 //                .build();
+
+// After registry.requestMatchers (latest one)
+//.formLogin(httpSecurityFormLoginConfigurer -> {
+//        httpSecurityFormLoginConfigurer.loginPage("/signin").permitAll()
+//                            .defaultSuccessUrl("/dashboard", true);
+//                })

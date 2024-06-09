@@ -54,18 +54,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     }
 
-//        if (account == null) {
-//
-//            throw new UsernameNotFoundException("An account was not found with the username: " + username);
-//
-//        }
-
-//        return new CustomUserDetails(account);
-
-//        return org.springframework.security.core.userdetails.User.builder()
-//                .username(account.getUsername())
-//                .password(account.getPassword())
-//                .roles(account.getUser().getType())
-//                .build();
-
 }
