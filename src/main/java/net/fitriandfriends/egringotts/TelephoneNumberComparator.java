@@ -1,5 +1,7 @@
 package net.fitriandfriends.egringotts;
 
+import net.fitriandfriends.egringotts.base.Account;
+
 import java.util.Comparator;
 
 public class TelephoneNumberComparator implements Comparator<Account> {

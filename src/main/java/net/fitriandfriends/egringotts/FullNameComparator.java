@@ -1,6 +1,7 @@
 package net.fitriandfriends.egringotts;
 
 import lombok.Data;
+import net.fitriandfriends.egringotts.base.Account;
 
 import java.util.Comparator;
 
