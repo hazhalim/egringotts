@@ -25,7 +25,7 @@ public class CurrencyExchangeController {
     @Autowired
     private CurrencyRepository currencyRepository;
 
-    @GetMapping("/convert")
+    @PostMapping("/convert")
     public ResponseEntity<ExchangeResultDTO> exchangeCurrency(@RequestBody ExchangeRequestDTO exchangeRequestDTO) {
 
         try {
@@ -43,7 +43,7 @@ public class CurrencyExchangeController {
 
         } catch (IllegalArgumentException exception) {
 
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().build();
 
         }
 

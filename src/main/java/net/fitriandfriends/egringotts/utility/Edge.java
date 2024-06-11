@@ -16,11 +16,11 @@ public class Edge<T extends Comparable<T>, N extends Comparable <N>> {
 
 	}
 	
-	public Edge(Vertex<T, N> destination, N weighty, Edge<T, N> nextEdge) {
+	public Edge(Vertex<T, N> destination, N weight, Edge<T, N> nextEdge) {
 
 		this.toVertex = destination;
 		this.weight = weight;
-		this.nextEdge = this.nextEdge;
+		this.nextEdge = nextEdge;
 
 	}
 

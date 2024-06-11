@@ -428,8 +428,8 @@ public class WeightedGraph<T extends Comparable<T>, N extends Comparable<N>> {
 
          for (T neighbor : getNeighbours(currentVertex)) {
 
-            N edgeWeight = getEdgeWeight(currentVertex, neighbor);
-            Double rate = ((CurrencyExchange) edgeWeight).getRate();
+            CurrencyExchange edgeWeight = (CurrencyExchange) getEdgeWeight(currentVertex, neighbor);
+            Double rate = edgeWeight.getRate();
             Double newDist = currentDistance + rate;
 
             if (newDist < distances.get(neighbor)) {

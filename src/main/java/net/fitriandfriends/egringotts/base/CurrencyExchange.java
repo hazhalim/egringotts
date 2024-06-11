@@ -50,7 +50,7 @@ public class CurrencyExchange implements Comparable<CurrencyExchange> {
     @Override
     public int compareTo(CurrencyExchange otherCurrencyExchange) {
 
-        return currencyExchangeRateID.compareTo(otherCurrencyExchange.currencyExchangeRateID);
+        return rate.compareTo(otherCurrencyExchange.rate);
 
     }
 

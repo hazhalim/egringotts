@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService {
@@ -94,6 +95,12 @@ public class AccountService {
     public List<Account> searchMatchingAccountsByFullName(String fullName) {
 
         return accountRepository.findByFullNameContainingIgnoreCase(fullName);
+
+    }
+
+    public Optional<Account> getAccountByUsername(String username) {
+
+        return accountRepository.findByUsernameIgnoreCase(username);
 
     }
 
@@ -207,12 +214,6 @@ public class AccountService {
         }
 
         SecurityAnswer securityAnswer = securityAnswerRepository.findByAccount(account);
-
-        if (accountDTO.getRole() != null && !accountDTO.getRole().isEmpty()) {
-
-            account.getUser().setType(accountDTO.getRole());
-
-        }
 
         if (accountDTO.getFullName() != null && !accountDTO.getFullName().isEmpty()) {
 

@@ -48,21 +48,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
 
-                    registry.requestMatchers("/", "/signin/**", "/signup/**", "/forgot/**", "/emails/test", "/securityquestions/all").permitAll();
-                    registry.requestMatchers(
-                            "/dashboard/**",
-                            "/transactionshistory/**",
-                            "/currencyexchange/**",
-                            "/expenditureanalysis/**",
-                            "/settings/**",
-                            "/transfer/**",
-                            "/balance/**",
-                            "/Addcard/**").hasAnyRole("PLATINUM_PATRONUS", "GOLDEN_GALLEON", "SILVER_SNITCH");
-                    registry.requestMatchers(
-                            "/admin",
-                            "/currencies/**"
-                            ).hasRole("GOBLIN");
-                    registry.anyRequest().authenticated();
+                    registry.requestMatchers("/**").permitAll();
 
                 })
                 // After registry.requestMatchers (latest one)
@@ -149,3 +135,17 @@ public class SecurityConfiguration {
     }
 
 }
+
+//registry.requestMatchers(
+//                            "/dashboard/**",
+//                                    "/transactionshistory/**",
+//                                    "/currencyexchange/**",
+//                                    "/expenditureanalysis/**",
+//                                    "/settings/**",
+//                                    "/transfer/**",
+//                                    "/Addcard/**").hasAnyRole("PLATINUM_PATRONUS", "GOLDEN_GALLEON", "SILVER_SNITCH");
+//                    registry.requestMatchers(
+//                            "/admin",
+//                                    "/currencies/**"
+//).hasRole("GOBLIN");
+//                    registry.anyRequest().authenticated();
