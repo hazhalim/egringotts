@@ -64,7 +64,7 @@ public class TransactionController {
 
     // Endpoint to download transaction history as a PDF file
     @GetMapping("/{transactionId}/download")
-    public ResponseEntity<byte[]> downloadTransactionHistory(@PathVariable Long transactionId) {
+    public ResponseEntity<byte[]> downloadTransactionReceipt(@PathVariable Long transactionId) {
 
         // Retrieve the stored PDF file associated with the transaction
         byte[] pdfContent = transactionService.getPdfContentForTransaction(transactionId);

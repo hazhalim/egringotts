@@ -30,7 +30,7 @@ public class RegistrationController {
     @Autowired
     private BalanceService balanceService;
 
-    @PostMapping("/signup/account")
+    @PostMapping("/account")
     public ResponseEntity<Account> registerAccount(@RequestBody AccountDTO accountDTO) {
 
         // Encode the sensitive information of the account

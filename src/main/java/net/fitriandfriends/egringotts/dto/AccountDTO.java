@@ -24,8 +24,6 @@ public class AccountDTO {
     private String postcode;
     private String country;
 
-    private String userImageURL;
-
     private String emailAddress;
     private String username;
     private String password;
@@ -35,7 +33,7 @@ public class AccountDTO {
     private String securityAnswer;
     private String securityPIN;
 
-    public AccountDTO(String role, String fullName, String gender, Date dateOfBirth, String streetName1, String streetName2, String town, String state, String postcode, String country, String userImageURL, String emailAddress, String username, String password, String telephoneNumber, Long securityQuestionID, String securityAnswer, String securityPIN) {
+    public AccountDTO(String role, String fullName, String gender, Date dateOfBirth, String streetName1, String streetName2, String town, String state, String postcode, String country, String emailAddress, String username, String password, String telephoneNumber, Long securityQuestionID, String securityAnswer, String securityPIN) {
 
         this.role = role;
         this.fullName = fullName;
@@ -47,7 +45,6 @@ public class AccountDTO {
         this.state = state;
         this.postcode = postcode;
         this.country = country;
-        this.userImageURL = userImageURL;
         this.emailAddress = emailAddress;
         this.username = username;
         this.password = password;

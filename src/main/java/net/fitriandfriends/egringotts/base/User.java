@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Table
-@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "roleType", discriminatorType = DiscriminatorType.STRING)
 @Data
 public abstract class User {
 

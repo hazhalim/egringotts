@@ -56,10 +56,6 @@ public class Account {
     @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     private Address address;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "user_image_id", referencedColumnName = "user_image_id")
-    private UserImage userImage;
-
     // Account access information
     @Column(name = "email_address")
     private String emailAddress;
@@ -104,14 +100,13 @@ public class Account {
     }
 
     // Actual constructor
-    public Account(User user, String fullName, String gender, Date dateOfBirth, Address address, UserImage userImage, String emailAddress, String username, String password, String telephoneNumber, SecurityQuestion securityQuestion, String securityPIN) {
+    public Account(User user, String fullName, String gender, Date dateOfBirth, Address address, String emailAddress, String username, String password, String telephoneNumber, SecurityQuestion securityQuestion, String securityPIN) {
 
         this.user = user;
         this.fullName = fullName;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
-        this.userImage = userImage;
         this.emailAddress = emailAddress;
         this.username = username;
         this.password = password;

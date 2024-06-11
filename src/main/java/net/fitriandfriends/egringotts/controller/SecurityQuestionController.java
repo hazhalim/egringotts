@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/securityquestions")
@@ -30,20 +31,12 @@ public class SecurityQuestionController {
 
     }
 
-    @GetMapping("/{accountId}")
-    public ResponseEntity<SecurityQuestion> getSecurityQuestionByAccountId(@PathVariable Long accountId) {
+    @GetMapping("/{username}")
+    public ResponseEntity<SecurityQuestion> getSecurityQuestionByUsername(@PathVariable String username) {
 
-        Account account = accountRepository.findByAccountID(accountId);
+        Optional<Account> account = accountRepository.findByUsername(username);
 
-        if (account != null) {
-
-            return ResponseEntity.ok(account.getSecurityQuestion());
-
-        } else {
-
-            throw new IllegalArgumentException("Account ID cannot be null.");
-
-        }
+        return account.map(value -> ResponseEntity.ok(value.getSecurityQuestion())).orElseGet(() -> ResponseEntity.notFound().build());
 
     }
 

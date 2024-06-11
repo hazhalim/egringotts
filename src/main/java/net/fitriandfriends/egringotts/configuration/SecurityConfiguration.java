@@ -65,7 +65,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
 
-                    registry.requestMatchers("/", "/signin/**", "/signup/**", "/forgot/**", "/emails/test").permitAll();
+                    registry.requestMatchers("/", "/signin/**", "/signup/**", "/forgot/**", "/emails/test", "/securityquestions/all").permitAll();
                     registry.requestMatchers(
                             "/dashboard/**",
                             "/transactionshistory/**",
@@ -74,11 +74,11 @@ public class SecurityConfiguration {
                             "/settings/**",
                             "/transfer/**",
                             "/balance/**",
-                            "/Addcard/**").hasAnyAuthority("Platinum Patronus", "Golden Galleon", "Silver Snitch");
+                            "/Addcard/**").hasAnyRole("Platinum Patronus", "Golden Galleon", "Silver Snitch");
                     registry.requestMatchers(
                             "/admin",
                             "/currencies/**"
-                            ).hasAuthority("Goblin");
+                            ).hasRole("Goblin");
                     registry.anyRequest().authenticated();
 
                 })

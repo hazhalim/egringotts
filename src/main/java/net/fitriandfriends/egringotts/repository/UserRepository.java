@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
 
-    // Query methods
+    // Other queries
 
 }
