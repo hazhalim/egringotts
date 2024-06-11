@@ -16,7 +16,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
 
         boolean isGoblin = authentication.getAuthorities().stream()
-                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("Goblin"));
+                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_GOBLIN"));
 
         if (isGoblin) {
 

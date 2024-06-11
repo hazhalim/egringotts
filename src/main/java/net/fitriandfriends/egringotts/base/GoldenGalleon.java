@@ -4,12 +4,12 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("Golden Galleon")
+@DiscriminatorValue("GOLDEN_GALLEON")
 public class GoldenGalleon extends User {
 
     public GoldenGalleon() {
 
-        super("Golden Galleon");
+        super("GOLDEN_GALLEON");
 
     }
 

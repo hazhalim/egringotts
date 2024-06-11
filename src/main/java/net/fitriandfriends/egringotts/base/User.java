@@ -27,38 +27,4 @@ public abstract class User {
 
     }
 
-    // Accessor and mutator methods
-    public Long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(Long userID) {
-        this.userID = userID;
-    }
-
-    public String getType() {
-
-        return this.type;
-
-    }
-
-    public void setType(String type) {
-
-        if (type.equals("Goblin")) {
-
-            this.type = type;
-
-        }
-
-    }
-
-    // Other methods
-    @Override
-    public String toString() {
-        return "User{" +
-                "userID=" + userID +
-                ", type='" + type + '\'' +
-                '}';
-    }
-
 }

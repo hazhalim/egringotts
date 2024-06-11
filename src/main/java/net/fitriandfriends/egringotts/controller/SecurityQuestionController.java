@@ -34,7 +34,7 @@ public class SecurityQuestionController {
     @GetMapping("/{username}")
     public ResponseEntity<SecurityQuestion> getSecurityQuestionByUsername(@PathVariable String username) {
 
-        Optional<Account> account = accountRepository.findByUsername(username);
+        Optional<Account> account = accountRepository.findByUsernameIgnoreCase(username);
 
         return account.map(value -> ResponseEntity.ok(value.getSecurityQuestion())).orElseGet(() -> ResponseEntity.notFound().build());
 

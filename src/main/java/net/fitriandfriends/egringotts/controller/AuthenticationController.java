@@ -29,7 +29,9 @@ public class AuthenticationController {
         try {
 
             Authentication authentication = authenticationManager.authenticate(
+
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+
             );
 
             // If authentication is successful, return a success message
@@ -44,7 +46,7 @@ public class AuthenticationController {
         } catch (AuthenticationException exception) {
 
             // Handle authentication failure
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
 
         }
 

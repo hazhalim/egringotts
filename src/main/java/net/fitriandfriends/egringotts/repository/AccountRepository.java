@@ -1,7 +1,6 @@
 package net.fitriandfriends.egringotts.repository;
 
 import net.fitriandfriends.egringotts.base.Account;
-import net.fitriandfriends.egringotts.base.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,7 +15,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     public List<Account> findAll(Sort sort);
 
     // Find an account by username
-    public Optional<Account> findByUsername(String username);
+    public Optional<Account> findByUsernameIgnoreCase(String username);
 
     // Find an account by its id
     public Account findByAccountID(Long accountID);

@@ -4,13 +4,13 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("Goblin")
+@DiscriminatorValue("GOBLIN")
 public class Goblin extends User {
 
     // Constructor
     public Goblin() {
 
-        super("Goblin");
+        super("GOBLIN");
 
     }
 

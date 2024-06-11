@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<Account> account = accountRepository.findByUsername(username);
+        Optional<Account> account = accountRepository.findByUsernameIgnoreCase(username);
 
         if (account.isPresent()) {
 
@@ -46,11 +46,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (role == null) {
 
-            return "Silver Snitch";
+            throw new UsernameNotFoundException("The account's assigned role was not found.");
 
         } else {
 
-            return account.getUser().getType();
+            return "ROLE_" + account.getUser().getType();
 
         }
 
