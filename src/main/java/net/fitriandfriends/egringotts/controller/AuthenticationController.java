@@ -46,7 +46,7 @@ public class AuthenticationController {
         } catch (AuthenticationException exception) {
 
             // Handle authentication failure
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(exception.getMessage());
 
         }
 

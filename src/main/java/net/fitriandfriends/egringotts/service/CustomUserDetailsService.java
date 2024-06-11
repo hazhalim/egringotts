@@ -50,7 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         } else {
 
-            return "ROLE_" + account.getUser().getType();
+            return role;
 
         }
 
