@@ -28,7 +28,7 @@ public class AccountController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping("/search")
-    public ResponseEntity<List<Account>> searchMatchingAccounts(@RequestParam(required = false) String fullName, @RequestParam(required = false) String telephoneNumber) {
+    public ResponseEntity<List<Account>> searchMatchingAccounts(@RequestBody(required = false) String fullName, @RequestParam(required = false) String telephoneNumber) {
 
         List<Account> matchingAccounts = accountService.searchMatchingAccounts(fullName, telephoneNumber);
 

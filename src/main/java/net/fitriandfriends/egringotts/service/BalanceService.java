@@ -29,7 +29,29 @@ public class BalanceService {
 
         for (Currency currency : currencyRepository.findAll()) {
 
-            Balance balance = new Balance(account, currency, 0.0);
+            Balance balance;
+
+            if (account.getUser().getType().equals("GOBLIN")) {
+
+                balance = new Balance(account, currency, 1000000.0);
+
+            } else if (account.getUser().getType().equals("PLATINUM_PATRONUS")) {
+
+                balance = new Balance(account, currency, 10000.0);
+
+            } else if (account.getUser().getType().equals("GOLDEN_GALLEON")) {
+
+                balance = new Balance(account, currency, 5000.0);
+
+            } else if (account.getUser().getType().equals("SILVER_SNITCH")) {
+
+                balance = new Balance(account, currency, 2500.0);
+
+            } else {
+
+                throw new IllegalArgumentException("Invalid account type");
+
+            }
 
             balances.add(balance);
 
