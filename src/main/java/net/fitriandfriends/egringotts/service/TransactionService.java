@@ -38,6 +38,8 @@ public class TransactionService {
 
     @Autowired
     private CardService cardService;
+    @Autowired
+    private TransactionReceiptGenerator transactionReceiptGenerator;
 
     // Get a transaction by its ID
     @Cacheable("transaction")
@@ -142,7 +144,7 @@ public class TransactionService {
         // Create a transaction and save it in the database
         Transaction transaction = new Transaction(transactionTransfer.getType(), fromAccount, toAccount, transactionTransfer.getPaymentMethod(), card, amount, currency, fromAccountBalance, new Date(), transactionTransfer.getCategory(), transactionTransfer.getDescription(), null);
 
-        String receiptFileName = TransactionReceiptGenerator.generateTransactionReceipt(transaction);
+        String receiptFileName = transactionReceiptGenerator.generateTransactionReceipt(transaction);
 
         transaction.setReceiptFileName(receiptFileName);
 
@@ -173,7 +175,7 @@ public class TransactionService {
 
         }
 
-        return null;
+        return new byte[0];
 
     }
 

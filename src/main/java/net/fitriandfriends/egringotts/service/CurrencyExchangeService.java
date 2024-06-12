@@ -29,7 +29,11 @@ import java.util.*;
 @Service
 public class CurrencyExchangeService {
 
+
     private WeightedGraph<Currency, CurrencyExchange> currencyExchangeGraph = new WeightedGraph<>();
+
+    @Autowired
+    private TransactionReceiptGenerator transactionReceiptGenerator;
 
     @Autowired
     private BalanceRepository balanceRepository;
@@ -137,7 +141,7 @@ public class CurrencyExchangeService {
     }
 
     @Cacheable("exchangeDirectCurrency")
-    public ExchangeResult exchangeDirectCurrency(net.fitriandfriends.egringotts.base.Currency fromCurrency, net.fitriandfriends.egringotts.base.Currency toCurrency, double amount) {
+    public ExchangeResult exchangeDirectCurrency(Currency fromCurrency, Currency toCurrency, double amount) {
         if (fromCurrency.compareTo(toCurrency) == 0) {
 
             HashMap<String, Double> processingFees = new LinkedHashMap<>();
@@ -170,7 +174,7 @@ public class CurrencyExchangeService {
     }
 
     @Cacheable("exchangeIndirectCurrency")
-    public ExchangeResult exchangeIndirectCurrency(net.fitriandfriends.egringotts.base.Currency fromCurrency, net.fitriandfriends.egringotts.base.Currency toCurrency, double amount) {
+    public ExchangeResult exchangeIndirectCurrency(Currency fromCurrency, Currency toCurrency, double amount) {
 
         // If the currencies are the same
         if (fromCurrency.compareTo(toCurrency) == 0) {
@@ -265,7 +269,7 @@ public class CurrencyExchangeService {
 
     @Transactional
     @CacheEvict(value = {"exchangeCurrency", "exchangeDirectCurrency", "exchangeIndirectCurrency"}, allEntries = true)
-    public boolean processCurrencyExchange(Account account, net.fitriandfriends.egringotts.base.Currency fromCurrency, Currency toCurrency, ExchangeResult exchangeResult) throws InsufficientBalanceException, TemplateException, IOException {
+    public boolean processCurrencyExchange(Account account, Currency fromCurrency, Currency toCurrency, ExchangeResult exchangeResult) throws InsufficientBalanceException, TemplateException, IOException {
 
         // Not-null checks
         if (account == null)
@@ -301,19 +305,16 @@ public class CurrencyExchangeService {
             balanceRepository.save(toCurrencyAccountBalance);
 
             // Generate transactions for the currency exchange
-            String description = "Currency Exchange: " + exchangeResult.initialAmount + " " + fromCurrency.getAbbreviation() + " to " + exchangeResult.exchangedAmount + " " + fromCurrency.getAbbreviation();
+            String description = "Currency Exchange: " + exchangeResult.initialAmount + " " + fromCurrency.getAbbreviation() + " to " + exchangeResult.exchangedAmount + " " + toCurrency.getAbbreviation();
 
             // Decrement transaction in fromCurrency's balance
-            Transaction decrementTransaction = new Transaction("Withdrawal", account, account, "Online Banking", null, totalFromAccountBalanceDeduction, fromCurrency, fromCurrencyAccountBalance, new Date(), "Currency Exchange", description, null);
-            decrementTransaction.setReceiptFileName(TransactionReceiptGenerator.generateTransactionReceipt(decrementTransaction));
+            Transaction transaction = new Transaction("Exchange", account, account, "Online Banking", null, totalFromAccountBalanceDeduction, fromCurrency, fromCurrencyAccountBalance, new Date(), "Currency Exchange", description, null);
+            Transaction decrementedTransaction = transactionRepository.save(transaction);
 
-            // Increment transaction in toCurrency's balance
-            Transaction incrementTransaction = new Transaction("Deposit", account, account, "Online Banking", null, totalToAccountBalanceIncrement, toCurrency, toCurrencyAccountBalance, new Date(), "Currency Exchange", description, null);
-            incrementTransaction.setReceiptFileName(TransactionReceiptGenerator.generateTransactionReceipt(incrementTransaction));
+            decrementedTransaction.setReceiptFileName("./src/main/resources/receipts/" + account.getAccountID() + transactionReceiptGenerator.generateTransactionReceipt(transaction));
 
             // Save the transactions
-            transactionRepository.save(decrementTransaction);
-            transactionRepository.save(incrementTransaction);
+            transactionRepository.save(decrementedTransaction);
 
             return true;
 

@@ -67,7 +67,7 @@ public class CurrencyExchangeController {
 
             if (success) {
 
-                return ResponseEntity.ok("The currency exchange processed successfully.");
+                return ResponseEntity.ok("The currency exchange processed successfully!");
 
             } else {
 
@@ -81,7 +81,7 @@ public class CurrencyExchangeController {
 
         } catch (Exception exception) {
 
-            return ResponseEntity.badRequest().body("There was an error processing the currency exchange.");
+            return ResponseEntity.badRequest().body(exception.getMessage());
 
         }
 

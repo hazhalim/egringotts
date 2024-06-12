@@ -4,6 +4,7 @@ import net.fitriandfriends.egringotts.base.Account;
 import net.fitriandfriends.egringotts.base.Transaction;
 import net.fitriandfriends.egringotts.repository.AccountRepository;
 import net.fitriandfriends.egringotts.repository.TransactionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -14,7 +15,9 @@ public class EmailService {
 
 
     private final JavaMailSender mailSender;
+    @Autowired
     private final AccountRepository accountRepository;
+    @Autowired
     private final TransactionRepository transactionRepository;
 
     public EmailService(JavaMailSender mailSender, AccountRepository accountRepository, TransactionRepository transactionRepository) {
@@ -71,7 +74,6 @@ public class EmailService {
 
     }
 
-    @Async
     public void sendTransactionEmail(Long accountId, Long transactionId) {
 
         Account account = accountRepository.findByAccountID(accountId);

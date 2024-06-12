@@ -1,12 +1,14 @@
 package net.fitriandfriends.egringotts.controller;
 
 import net.fitriandfriends.egringotts.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/emails")
 @RestController
 public class EmailController {
 
+    @Autowired
     private final EmailService emailService;
 
     public EmailController(EmailService emailService) {
@@ -23,14 +25,14 @@ public class EmailController {
     }
 
     @GetMapping("/{accountId}")
-    public void sendAccountCreationEmail(@RequestParam Long accountId) {
+    public void sendAccountCreationEmail(@PathVariable Long accountId) {
 
         emailService.sendAccountCreationEmail(accountId);
 
     }
 
     @GetMapping("/{accountId}/{transactionId}")
-    public void sendTransactionEmail(@RequestParam Long accountId, @RequestParam Long transactionId) {
+    public void sendTransactionEmail(@PathVariable Long accountId, @PathVariable Long transactionId) {
 
         emailService.sendTransactionEmail(accountId, transactionId);
 
