@@ -1,4 +1,4 @@
-package net.fitriandfriends.egringotts;
+package net.fitriandfriends.egringotts.configuration;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

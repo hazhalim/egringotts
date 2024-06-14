@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
-    public List<Address> findAll();
-    public Address findByAddressID(Long addressID);
+    List<Address> findAll();
+
+    Address findByAddressID(Long addressID);
 
 }

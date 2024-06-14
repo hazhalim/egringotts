@@ -18,6 +18,7 @@ public class BalanceService {
 
     @Autowired
     private BalanceRepository balanceRepository;
+
     @Autowired
     private CurrencyRepository currencyRepository;
 

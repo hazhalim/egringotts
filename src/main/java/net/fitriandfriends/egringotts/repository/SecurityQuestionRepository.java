@@ -10,7 +10,9 @@ import java.util.List;
 public interface SecurityQuestionRepository extends JpaRepository<SecurityQuestion, Long> {
 
     public List<SecurityQuestion> findAll();
+
     public SecurityQuestion findBySecurityQuestionID(Long securityQuestionID);
+
     public SecurityQuestion findByQuestion(String question);
 
 }

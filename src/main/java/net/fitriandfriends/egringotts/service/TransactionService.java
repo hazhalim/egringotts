@@ -38,6 +38,7 @@ public class TransactionService {
 
     @Autowired
     private CardService cardService;
+
     @Autowired
     private TransactionReceiptGenerator transactionReceiptGenerator;
 
@@ -53,7 +54,7 @@ public class TransactionService {
     @Cacheable("transactionHistory")
     public List<Transaction> getTransactionHistory(Long accountId) {
 
-        // From DB, get the transactions of an account
+        // From the database, get the transactions of an account
         List<Transaction> transactions = transactionRepository.findByFromAccount_AccountID(accountId);
 
         // Initialise a PensievePast instance
@@ -67,24 +68,6 @@ public class TransactionService {
 
     }
 
-//    // Get all transactions of an account (by Account object)
-//    @Cacheable("transactionHistory")
-//    public List<Transaction> getTransactionHistory(Account account) {
-//
-//        // From DB, get the transactions of an account
-//        List<Transaction> transactions = transactionRepository.findByFromAccount(account);
-//
-//        // Initialise a PensievePast instance
-//        PensievePast pensievePast = new PensievePast();
-//
-//        // Push each transaction in the list to the stack (the least recent transaction is at the bottom)
-//        pensievePast.pushTransactionsToStack(transactions);
-//
-//        // Return the new list of transactions by getting the pensieve past (the most recent transaction is at the top)
-//        return pensievePast.getPensievePast();
-//
-//    }
-
     // Get all transactions of an account with specific filters (by account ID, through the repository)
     @Cacheable("transactionsByAccountId")
     public List<Transaction> getFilteredTransactions(Long accountId, String category, Date startDate, Date endDate, Double amountThreshold) {
@@ -93,7 +76,6 @@ public class TransactionService {
 
     }
 
-    // Other service methods
     @Transactional
     @CacheEvict(value = {"transactionHistory", "transactionsByAccountId", "transaction"}, allEntries = true)
     public Transaction performTransaction(TransactionTransfer transactionTransfer) throws TemplateException, IOException, InsufficientBalanceException {
@@ -190,5 +172,7 @@ public class TransactionService {
         return transactionRepository.sumAmountByCurrency_CurrencyID(currencyId);
 
     }
+
+    // Other service methods
 
 }

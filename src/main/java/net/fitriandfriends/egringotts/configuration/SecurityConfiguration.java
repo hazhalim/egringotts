@@ -1,6 +1,5 @@
 package net.fitriandfriends.egringotts.configuration;
 
-import net.fitriandfriends.egringotts.AuthenticationSuccessHandler;
 import net.fitriandfriends.egringotts.base.Account;
 import net.fitriandfriends.egringotts.base.User;
 import net.fitriandfriends.egringotts.repository.AccountRepository;
@@ -51,14 +50,13 @@ public class SecurityConfiguration {
                     registry.requestMatchers("/**").permitAll();
 
                 })
-                // After registry.requestMatchers (latest one)
+
                 .formLogin(httpSecurityFormLoginConfigurer -> {
                     httpSecurityFormLoginConfigurer.loginPage("/signin")
                             .successHandler(authenticationSuccessHandler)
                             .permitAll();
 
                 })
-
 
                 .build();
 
@@ -107,7 +105,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(AccountRepository accountRepository) {
+    public CustomUserDetailsService customUserDetailsService(AccountRepository accountRepository) {
         return username -> {
 
             Account account = accountRepository.findByUsernameIgnoreCase(username)
@@ -135,17 +133,3 @@ public class SecurityConfiguration {
     }
 
 }
-
-//registry.requestMatchers(
-//                            "/dashboard/**",
-//                                    "/transactionshistory/**",
-//                                    "/currencyexchange/**",
-//                                    "/expenditureanalysis/**",
-//                                    "/settings/**",
-//                                    "/transfer/**",
-//                                    "/Addcard/**").hasAnyRole("PLATINUM_PATRONUS", "GOLDEN_GALLEON", "SILVER_SNITCH");
-//                    registry.requestMatchers(
-//                            "/admin",
-//                                    "/currencies/**"
-//).hasRole("GOBLIN");
-//                    registry.anyRequest().authenticated();

@@ -2,7 +2,9 @@ package net.fitriandfriends.egringotts.controller;
 
 import net.fitriandfriends.egringotts.base.Account;
 import net.fitriandfriends.egringotts.base.Currency;
+import net.fitriandfriends.egringotts.base.ExchangeResult;
 import net.fitriandfriends.egringotts.dto.ExchangeRequestDTO;
+import net.fitriandfriends.egringotts.dto.ExchangeResultDTO;
 import net.fitriandfriends.egringotts.dto.ProcessExchangeRequestDTO;
 import net.fitriandfriends.egringotts.exception.InsufficientBalanceException;
 import net.fitriandfriends.egringotts.repository.AccountRepository;
@@ -11,8 +13,6 @@ import net.fitriandfriends.egringotts.service.CurrencyExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import net.fitriandfriends.egringotts.service.CurrencyExchangeService.*;
 
 @RestController
 @RequestMapping("/exchange")
@@ -37,7 +37,7 @@ public class CurrencyExchangeController {
 
             ExchangeResult result = currencyExchangeService.exchangeCurrency(fromCurrency, toCurrency, amount);
 
-            ExchangeResultDTO resultDTO = new CurrencyExchangeService.ExchangeResultDTO(result.getInitialAmount(), result.getExchangedAmount(), result.getTotalProcessingFee(), result.getProcessingFees());
+            ExchangeResultDTO resultDTO = new ExchangeResultDTO(result.getInitialAmount(), result.getExchangedAmount(), result.getTotalProcessingFee(), result.getProcessingFees());
 
             return ResponseEntity.ok(resultDTO);
 

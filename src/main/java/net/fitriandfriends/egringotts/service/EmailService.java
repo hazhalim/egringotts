@@ -25,6 +25,7 @@ public class EmailService {
         this.mailSender = mailSender;
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+
     }
 
     @Async
@@ -32,7 +33,7 @@ public class EmailService {
 
         SimpleMailMessage message = new SimpleMailMessage();
 
-        message.setTo("mnfitrifzn2004@gmail.com");
+        message.setTo("hazhalim0507@gmail.com");
         message.setSubject("Test Email");
         message.setText("This is a test email from E-Gringotts Bank.");
 

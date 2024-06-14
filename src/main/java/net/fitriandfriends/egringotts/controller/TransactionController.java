@@ -3,7 +3,6 @@ package net.fitriandfriends.egringotts.controller;
 import net.fitriandfriends.egringotts.service.TransactionService;
 import freemarker.template.TemplateException;
 import net.fitriandfriends.egringotts.exception.InsufficientBalanceException;
-import net.fitriandfriends.egringotts.repository.TransactionRepository;
 import net.fitriandfriends.egringotts.dto.TransactionTransfer;
 import net.fitriandfriends.egringotts.base.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,6 @@ public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
-
-    @Autowired
-    private TransactionRepository transactionRepository;
 
     // Endpoint to create a transaction
     @PostMapping("/create")

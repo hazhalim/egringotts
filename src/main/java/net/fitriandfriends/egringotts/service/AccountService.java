@@ -19,18 +19,22 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
     @Autowired
     private SecurityQuestionRepository securityQuestionRepository;
-    @Autowired
-    private BalanceService balanceService;
+
     @Autowired
     private AddressRepository addressRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private SecurityAnswerRepository securityAnswerRepository;
+
 
     @CacheEvict(value = {"accountById", "accountsSortedAscending", "accountsSortedDescending", "accountsByFullName", "accountsByTelephoneNumber"}, allEntries = true)
     public Account createAccount(AccountDTO accountDTO) {
@@ -104,28 +108,6 @@ public class AccountService {
 
     }
 
-//    public List<Account> searchAccountByFullName(String fullName) {
-//
-//        List<Account> sortedAccounts = getAllAccountsSortedAscending("fullName");
-//
-//        List<Account> matchingAccounts = new ArrayList<>();
-//
-//        int index = Collections.binarySearch(sortedAccounts, new Account(fullName, true), new FullNameComparator());
-//
-//        if (index >= 0) {
-//
-//            matchingAccounts.add(sortedAccounts.get(index));
-//
-//            return matchingAccounts;
-//
-//        } else {
-//
-//            return null;
-//
-//        }
-//
-//    }
-
     // Search for any account by telephone number
     @Cacheable("accountsByTelephoneNumber")
     public List<Account> searchMatchingAccountsByTelephoneNumber(String telephoneNumber) {
@@ -133,28 +115,6 @@ public class AccountService {
         return accountRepository.findByTelephoneNumberContaining(telephoneNumber);
 
     }
-
-//    public List<Account> searchAccountByTelephoneNumber(String telephoneNumber) {
-//
-//        List<Account> sortedAccounts = getAllAccountsSortedAscending("telephoneNumber");
-//
-//        List<Account> matchingAccounts = new ArrayList<>();
-//
-//        int index = Collections.binarySearch(sortedAccounts, new Account(telephoneNumber), new TelephoneNumberComparator());
-//
-//        if (index >= 0) {
-//
-//            matchingAccounts.add(sortedAccounts.get(index));
-//
-//            return matchingAccounts;
-//
-//        } else {
-//
-//            return null;
-//
-//        }
-//
-//    }
 
     // Search for any account by full name or telephone number
     public List<Account> searchMatchingAccounts(String fullName, String telephoneNumber) {
@@ -201,6 +161,7 @@ public class AccountService {
         SecurityAnswer securityAnswer = securityAnswerRepository.findByAccount(account);
 
         return new AccountDTO(account.getUser().getType(), account.getFullName(), account.getGender(), account.getDateOfBirth(), account.getAddress().getStreetName1(), account.getAddress().getStreetName2(), account.getAddress().getTown(), account.getAddress().getState(), account.getAddress().getPostcode(), account.getAddress().getCountry(), account.getEmailAddress(), account.getUsername(), account.getPassword(), account.getTelephoneNumber(), account.getSecurityQuestion().getSecurityQuestionID(), securityAnswer.getAnswer(), account.getSecurityPIN());
+
     }
 
     public String updateAccountSettings(Long accountId, AccountDTO accountDTO) {
@@ -330,43 +291,6 @@ public class AccountService {
         return accountRepository.findByAccountID(accountId).getUsername();
 
     }
-
-
-//    public List<Account> searchAccount(String fullName, String telephoneNumber) {
-//
-//        List<Account> sortedAccounts = getAllAccountsSortedAscending("fullName");
-//
-//        List<Account> matchingAccounts = new ArrayList<>();
-//
-//        int index = Collections.binarySearch(sortedAccounts, new Account(fullName, true), new FullNameComparator());
-//
-//        if (index >= 0) {
-//
-//            matchingAccounts.add(sortedAccounts.get(index));
-//
-//            return matchingAccounts;
-//
-//        } else { // If not found by fullName, try to find by telephoneNumber instead
-//
-//            sortedAccounts = getAllAccountsSortedAscending("telephoneNumber");
-//
-//            index = Collections.binarySearch(sortedAccounts, new Account(telephoneNumber), new TelephoneNumberComparator());
-//
-//            if (index >= 0) {
-//
-//                matchingAccounts.add(sortedAccounts.get(index));
-//
-//                return matchingAccounts;
-//
-//            } else {
-//
-//                return matchingAccounts; // This list will be empty, however
-//
-//            }
-//
-//        }
-//
-//    }
 
     // Other service methods
 

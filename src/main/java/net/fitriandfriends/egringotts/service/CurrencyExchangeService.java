@@ -3,17 +3,11 @@ package net.fitriandfriends.egringotts.service;
 import freemarker.template.TemplateException;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import net.fitriandfriends.egringotts.base.Balance;
+import net.fitriandfriends.egringotts.base.*;
+import net.fitriandfriends.egringotts.base.Currency;
 import net.fitriandfriends.egringotts.exception.InsufficientBalanceException;
 import net.fitriandfriends.egringotts.utility.TransactionReceiptGenerator;
 import net.fitriandfriends.egringotts.utility.WeightedGraph;
-import net.fitriandfriends.egringotts.base.Account;
-import net.fitriandfriends.egringotts.base.Currency;
-import net.fitriandfriends.egringotts.base.CurrencyExchange;
-import net.fitriandfriends.egringotts.base.Transaction;
 import net.fitriandfriends.egringotts.repository.BalanceRepository;
 import net.fitriandfriends.egringotts.repository.CurrencyExchangeRepository;
 import net.fitriandfriends.egringotts.repository.CurrencyRepository;
@@ -30,24 +24,27 @@ import java.util.*;
 public class CurrencyExchangeService {
 
 
-    private WeightedGraph<Currency, CurrencyExchange> currencyExchangeGraph = new WeightedGraph<>();
+    private final WeightedGraph<Currency, CurrencyExchange> currencyExchangeGraph = new WeightedGraph<>();
 
     @Autowired
     private TransactionReceiptGenerator transactionReceiptGenerator;
 
     @Autowired
     private BalanceRepository balanceRepository;
+
     @Autowired
     private CurrencyRepository currencyRepository;
+
     @Autowired
     private CurrencyExchangeRepository currencyExchangeRepository;
+
     @Autowired
     private TransactionRepository transactionRepository;
 
     @PostConstruct
     public void initialiseGraph() {
 
-        List<net.fitriandfriends.egringotts.base.Currency> currencies = currencyRepository.findAll();
+        List<Currency> currencies = currencyRepository.findAll();
         List<CurrencyExchange> currencyExchanges = currencyExchangeRepository.findAll();
 
         for (net.fitriandfriends.egringotts.base.Currency currency : currencies) {
@@ -65,7 +62,7 @@ public class CurrencyExchangeService {
     }
 
     @Cacheable("exchangeCurrency")
-    public ExchangeResult exchangeCurrency(net.fitriandfriends.egringotts.base.Currency fromCurrency, net.fitriandfriends.egringotts.base.Currency toCurrency, double amount) {
+    public ExchangeResult exchangeCurrency(Currency fromCurrency, Currency toCurrency, double amount) {
 
         // If the specified fromCurrency doesn't exist
         if (!currencyExchangeGraph.hasVertex(fromCurrency)) {
@@ -82,59 +79,14 @@ public class CurrencyExchangeService {
         }
 
         // If there is a direct exchange rate from fromCurrency to toCurrency
+        // Else, use the shortest path to exchange the currency using Djikstra's algorithm
         if (currencyExchangeGraph.hasEdge(fromCurrency, toCurrency)) {
 
             return exchangeDirectCurrency(fromCurrency, toCurrency, amount);
 
-        // Else, use the shortest path to exchange the currency using Djikstra's algorithm
         } else {
 
             return exchangeIndirectCurrency(fromCurrency, toCurrency, amount);
-
-        }
-
-    }
-
-    // The result of a currency exchange is encapsulated in this class
-    // Contains: the new exchanged amount (toCurrency),
-    // the total processing fees (fromCurrency),
-    // each processing fee for each intermediate exchange (fromCurrency)
-    @Data
-    @Getter
-    @Setter
-    public static class ExchangeResult {
-
-        // Instance variables
-        private double initialAmount;
-        private double exchangedAmount;
-        private double totalProcessingFee;
-        private Map<String, Double> processingFees;
-
-        public ExchangeResult(double initialAmount, double exchangedAmount, double totalProcessingFee, Map<String, Double> processingFees) {
-
-            this.initialAmount = initialAmount;
-            this.exchangedAmount = exchangedAmount;
-            this.totalProcessingFee = totalProcessingFee;
-            this.processingFees = processingFees;
-
-        }
-
-    }
-
-    @Data
-    public static class ExchangeResultDTO {
-
-        // Instance variables
-        private double initialAmount;
-        private double exchangedAmount;
-        private double totalProcessingFee;
-        private String processingFees;
-
-        public ExchangeResultDTO(double initialAmount, double exchangedAmount, double totalProcessingFee, Map<String, Double> processingFees) {
-            this.initialAmount = initialAmount;
-            this.exchangedAmount = exchangedAmount;
-            this.totalProcessingFee = totalProcessingFee;
-            this.processingFees = processingFees.toString();
 
         }
 
@@ -237,36 +189,6 @@ public class CurrencyExchangeService {
 
     }
 
-//    @Cacheable("exchangeIndirectCurrency")
-//    public ExchangeResult exchangeIndirectCurrencyDetailed(Currency fromCurrency, Currency toCurrency, double amount) {
-//        if (fromCurrency.compareTo(toCurrency) == 0) {
-//            return new ExchangeResult(amount, 0.0, new HashMap<>());
-//        } else {
-//            Map<Currency, Double> distances = currencyExchangeGraph.shortestPath(fromCurrency);
-//            Map<Currency, CurrencyExchange> exchanges = currencyExchangeGraph.shortestPathWithExchanges(fromCurrency);
-//            Double totalRate = distances.get(toCurrency);
-//
-//            if (totalRate != null) {
-//                double convertedAmount = amount * totalRate;
-//                double totalProcessingFee = 0.0;
-//                Map<String, Double> processingFees = new LinkedHashMap<>();
-//
-//                Currency currentCurrency = toCurrency;
-//                while (!currentCurrency.equals(fromCurrency)) {
-//                    CurrencyExchange exchange = exchanges.get(currentCurrency);
-//                    double processingFee = amount * exchange.getProcessingFee();
-//                    processingFees.put(currentCurrency.getAbbreviation(), processingFee);
-//                    totalProcessingFee += processingFee;
-//                    currentCurrency = exchange.getFromCurrency();
-//                }
-//
-//                return new ExchangeResult(convertedAmount, totalProcessingFee, processingFees);
-//            } else {
-//                throw new IllegalArgumentException("No conversion path from " + fromCurrency.getAbbreviation() + " to " + toCurrency.getAbbreviation());
-//            }
-//        }
-//    }
-
     @Transactional
     @CacheEvict(value = {"exchangeCurrency", "exchangeDirectCurrency", "exchangeIndirectCurrency"}, allEntries = true)
     public boolean processCurrencyExchange(Account account, Currency fromCurrency, Currency toCurrency, ExchangeResult exchangeResult) throws InsufficientBalanceException, TemplateException, IOException {
@@ -289,10 +211,10 @@ public class CurrencyExchangeService {
         Balance toCurrencyAccountBalance = balanceRepository.findByAccountAndCurrency(account, toCurrency);
 
         // Find the amount to be deducted from the fromCurrency account balance
-        Double totalFromAccountBalanceDeduction = exchangeResult.initialAmount + exchangeResult.totalProcessingFee;
+        Double totalFromAccountBalanceDeduction = exchangeResult.getInitialAmount() + exchangeResult.getTotalProcessingFee();
 
         // Find the amount to be incremented to the toCurrency account balance
-        Double totalToAccountBalanceIncrement = exchangeResult.exchangedAmount;
+        Double totalToAccountBalanceIncrement = exchangeResult.getExchangedAmount();
 
         // If the account has enough balance to process the currency exchange
         if (fromCurrencyAccountBalance.getBalance() >= totalFromAccountBalanceDeduction) {
@@ -305,7 +227,7 @@ public class CurrencyExchangeService {
             balanceRepository.save(toCurrencyAccountBalance);
 
             // Generate transactions for the currency exchange
-            String description = "Currency Exchange: " + exchangeResult.initialAmount + " " + fromCurrency.getAbbreviation() + " to " + exchangeResult.exchangedAmount + " " + toCurrency.getAbbreviation();
+            String description = "Currency Exchange: " + exchangeResult.getInitialAmount() + " " + fromCurrency.getAbbreviation() + " to " + exchangeResult.getExchangedAmount() + " " + toCurrency.getAbbreviation();
 
             // Decrement transaction in fromCurrency's balance
             Transaction transaction = new Transaction("Exchange", account, account, "Online Banking", null, totalFromAccountBalanceDeduction, fromCurrency, fromCurrencyAccountBalance, new Date(), "Currency Exchange", description, null);

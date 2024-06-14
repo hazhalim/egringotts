@@ -8,7 +8,6 @@ import net.fitriandfriends.egringotts.base.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,16 +70,6 @@ public class AccountController {
         }
 
     }
-
-//    @PostMapping("/generatetoken")
-//    public String authenticateAndGetToken(@RequestBody AuthenticationDTO authenticationDTO) {
-//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-//        if (authentication.isAuthenticated()) {
-//            return jwtService.generateToken(authRequest.getUsername());
-//        } else {
-//            throw new UsernameNotFoundException(&quot;invalid user request !&quot;);
-//        }
-//    }
 
     @GetMapping("/{accountId}/username")
     public ResponseEntity<String> getUsername(@PathVariable Long accountId) {
